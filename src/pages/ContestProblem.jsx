@@ -51,7 +51,7 @@ const ContestProblem = () => {
     return (
         <>
             <ActiveContestHeader />
-            <div className="h-[84%] font-helvetica flex flex-col gap-4 text-white px-16 pt-7 pb-3">
+            <div className="h-[84%] font-helvetica flex flex-col gap-4 text-white px-16 pt-4 pb-3">
                 <div className='h-[10%] flex gap-8 items-center col-span-2'>
                     <div className='w-1/2 flex gap-4 items-center'>
                         <NavLink to={`/contestactive/${params.contestcode}`}><FaArrowCircleLeft className='text-2xl text-primary' /></NavLink>

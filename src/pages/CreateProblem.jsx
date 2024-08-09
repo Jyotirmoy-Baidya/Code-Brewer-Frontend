@@ -43,7 +43,7 @@ const CreateProblem = () => {
                 </div>
                 <div className='grow flex flex-col overflow-scroll design-scrollbar'>
                     <div className='text-2xl mb-2'>Title</div>
-                    <input type="text" className='py-2 px-2 rounded-sm bg-transparent outline-none border border-gray-500  focus:border-primary focus:shadow focus:shadow-primary' placeholder='Title' onChange={(e) => setTitle(e.target.value)} value={title} />
+                    <input type="text" className='py-2 px-2 rounded-sm bg-transparent outline-none border border-gray-500  focus:border-primary focus:shadow focus:shadow-primary' placeholder='Title' onChange={(e) => setTitle(e.target.value)} value={`${title}`} />
 
                     <div className='text-2xl mt-6 mb-2'>Set Difficulty</div>
                     <div className='flex gap-4 mt-2 select-difficulty'>
