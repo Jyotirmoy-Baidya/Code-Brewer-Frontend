@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Text area */
+.vscode-textarea {
+    width: 50%;
+    height: 100%;
+    background-color: #1e1e1e;
+    /* Dark background */
+    color: #d4d4d4;
+    /* Text color */
+    font-family: 'Consolas', 'Courier New', monospace;
+    /* Monospace font */
+    font-size: 14px;
+    line-height: 1.5;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    resize: none;
+    caret-color: #ffffff;
+    /* White caret (cursor) color */
+    overflow: auto;
+}
+
+.vscode-textarea:focus {
+    outline: none;
+    border: 1px solid #007acc;
+    /* Border color on focus */
+    box-shadow: 0 0 8px rgba(0, 122, 204, 0.8);
+    /* Glow effect */
+}
+
+.vscode-textarea::selection {
+    background-color: #1BF1A1;
+    /* Highlight color */
+    color: #000000;
+    /* Highlighted text color */
+}
+
+.vscode-textarea::-webkit-scrollbar {
+    width: 12px;
+}
+
+.vscode-textarea::-webkit-scrollbar-track {
+    background: #2e2e2e;
+    /* Scrollbar track color */
+}
+
+.vscode-textarea::-webkit-scrollbar-thumb {
+    background-color: #007acc;
+    /* Scrollbar thumb color */
+    border-radius: 10px;
+    border: 3px solid #2e2e2e;
+    /* Scrollbar thumb border */
+}
+
+/* Problem Statement */
+.problem-statement {
+    overflow: auto;
+    padding-right: 15px;
+}
+
+.problem-statement::-webkit-scrollbar {
+    width: 12px;
+}
+
+.problem-statement::-webkit-scrollbar-track {
+    background: #2e2e2e;
+}
+
+.problem-statement::-webkit-scrollbar-thumb {
+    background-color: #007acc;
+    border-radius: 10px;
+    border: 3px solid #2e2e2e;
+}
+
+.loading-spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+
+/* Designing scrollbar  */
+.design-scrollbar {
+    overflow: auto;
+    padding-right: 15px;
+}
+
+.design-scrollbar::-webkit-scrollbar {
+    width: 12px;
+}
+
+.design-scrollbar::-webkit-scrollbar-track {
+    background: #2e2e2e;
+}
+
+.design-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #007acc;
+    border-radius: 10px;
+    border: 3px solid #2e2e2e;
+}
