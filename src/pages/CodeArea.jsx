@@ -53,10 +53,22 @@ const CodeArea = () => {
     const [code, setCode] = useState(boilerplateCode('java'));
 
 
+    // function extractClassName(code) {
+    //     const classNameMatch = code.match(/class\s+(\w+)/);
+    //     return classNameMatch ? classNameMatch[1] : null;
+    // }
     function extractClassName(code) {
-        const classNameMatch = code.match(/class\s+(\w+)/);
-        return classNameMatch ? classNameMatch[1] : null;
-    }
+        // Regex to match the class that contains the main method
+        const mainClassMatch = code.match(/class\s+(\w+)\s+.*\{[^]*?public\s+static\s+void\s+main\s*\(\s*String\s*\[\s*\]\s*args\s*\)\s*\{[^]*?\}/);
+        
+        // If a class with the main method is found, return its name
+        if (mainClassMatch) {
+          return mainClassMatch[1];
+        }
+      
+        // Otherwise, return null
+        return null;
+      }
 
 
     const runCode = () => {
@@ -65,8 +77,8 @@ const CodeArea = () => {
         const className = extractClassName(code);
 
         if (className == null) {
-            console.log('Error: No class name found your in the code.');
-            setOutput('Error: No class name found your in the code.');
+            console.log('Error: No class with main method found in your code.');
+            setOutput('Error: No class with main method found in your code.');
             return;
         }
 
