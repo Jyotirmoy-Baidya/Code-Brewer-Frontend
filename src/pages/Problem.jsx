@@ -26,6 +26,24 @@ const options = [
 ];
 
 const Problem = () => {
+
+
+    const boilerplateCode = (lang) => {
+        switch (lang) {
+            case 'java':
+                return `class TempCode {
+  // write your code here . . .
+}`;
+            case 'cpp':
+                return `class TempCode {
+  // write your code here . . .
+}`;
+            default:
+                return '';
+        }
+    };
+
+
     const params = useParams();
     const [runCodeLoading, setRunCodeLoading] = useState(false);
     const [problem, setProblem] = useState({});
@@ -34,7 +52,8 @@ const Problem = () => {
     const [testCasesResult, setTestCaseResult] = useState([]);
 
     //Code By T
-    const [code, setCode] = useState('');
+    // const [code, setCode] = useState('');
+    const [code, setCode] = useState(boilerplateCode('java'));
     const [language, setLanguage] = useState('java'); // Default to java
     const [input, setInput] = useState(''); // New state for user input
     const [output, setOutput] = useState('');

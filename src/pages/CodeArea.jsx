@@ -32,11 +32,11 @@ const CodeArea = () => {
         switch (lang) {
             case 'java':
                 return `class TempCode {
-        // write your code here . . .
+  // write your code here . . .
 }`;
             case 'cpp':
                 return `class TempCode {
-      // write your code here . . .
+  // write your code here . . .
 }`;
             default:
                 return '';
@@ -181,7 +181,10 @@ const CodeArea = () => {
 
         // Notable Annotations
         'Override', 'Deprecated', 'SuppressWarnings', 'FunctionalInterface', 'SafeVarargs', 'Retention',
-        'Target', 'Inherited', 'Documented'
+        'Target', 'Inherited', 'Documented',
+
+        //
+        'out', 'print', 'println'
     ];
 
 

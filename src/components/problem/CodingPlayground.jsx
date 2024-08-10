@@ -64,7 +64,10 @@ function CodingPlayground({ code, setCode, language, input, setInput, output, me
 
     // Notable Annotations
     'Override', 'Deprecated', 'SuppressWarnings', 'FunctionalInterface', 'SafeVarargs', 'Retention',
-    'Target', 'Inherited', 'Documented'
+    'Target', 'Inherited', 'Documented',
+
+    //
+    'out', 'print', 'println'
   ];
 
 
