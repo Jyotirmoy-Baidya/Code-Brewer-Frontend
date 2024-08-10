@@ -68,7 +68,7 @@ const CodeArea = () => {
       
         // Otherwise, return null
         return null;
-      }
+    }
 
 
     const runCode = () => {
