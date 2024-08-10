@@ -31,6 +31,8 @@ const Problem = () => {
     const [problem, setProblem] = useState({});
     const [loading, setLoading] = useState(false);
 
+    const [testCasesResult, setTestCaseResult] = useState([]);
+
     //Code By T
     const [code, setCode] = useState('');
     const [language, setLanguage] = useState('java'); // Default to java
@@ -47,11 +49,7 @@ const Problem = () => {
         axiosInstance.post(`http://localhost:3010/api/v1/question/run/${id}`, { language, code: codepost })
             .then(response => {
                 console.log(response);
-                // setOutput(response.data.output);
-                // setMetrics({
-                //     time: response.data.executionTime,
-                //     memory: response.data.memoryUsed
-                // });
+                setTestCaseResult(response.data);
                 toast.success("Output Came");
             })
             .catch(error => {
@@ -221,7 +219,7 @@ const Problem = () => {
                                 </div>
 
                                 {/* <textarea className="vscode-textarea" placeholder="Start typing..."></textarea> */}
-                                <CodingPlayground code={code} setCode={setCode} language={language} input={input} setInput={setInput} output={output} metrics={metrics} getLanguageExtension={getLanguageExtension} customInput={customInput} setCustomInput={setCustomInput} />
+                                <CodingPlayground code={code} setCode={setCode} language={language} input={input} setInput={setInput} output={output} metrics={metrics} getLanguageExtension={getLanguageExtension} customInput={customInput} setCustomInput={setCustomInput} testCasesResult={testCasesResult} />
                             </div>
                         </div>
             }

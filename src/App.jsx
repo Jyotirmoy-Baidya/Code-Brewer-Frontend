@@ -8,6 +8,7 @@ import ContestProblem from "./pages/ContestProblem"
 import CreateProblem from "./pages/CreateProblem"
 import { Toaster } from "react-hot-toast"
 import CodeArea from "./pages/CodeArea"
+import Broiler from "./components/basic/Broiler"
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/problem/:problemid" element={<Problem />} />
           <Route path="/createproblem" element={<CreateProblem />} />
           <Route path="/codearea" element={<CodeArea />} />
+          <Route path="/test" element={<Broiler />} />
           <Route path="*" element={<Landing />} />
         </Routes>
       </BrowserRouter>
