@@ -28,12 +28,11 @@ const options = [
 const CodeArea = () => {
 
     const [runCodeLoading, setRunCodeLoading] = useState(false);
-    //Code By T
     const [language, setLanguage] = useState('java'); // Default to java
     const [input, setInput] = useState(''); // New state for user input
     const [output, setOutput] = useState('');
     const [metrics, setMetrics] = useState({ time: '', memory: '' });
-    const [customInput, setCustomInput] = useState(false);
+    const [code, setCode] = useState("");
 
 
     function extractClassName(code) {
@@ -110,33 +109,6 @@ const CodeArea = () => {
                 return cpp(); // Default to C++ if no match
         }
     };
-
-
-    //Boiler Plate
-    const fixedBoilerplate = `public class TempCode{\n \n}\n\n`; // Example boilerplate
-
-    const [code, setCode] = useState(fixedBoilerplate);
-
-    useEffect(() => {
-        setCode(fixedBoilerplate);
-    }, [fixedBoilerplate]);
-
-    const handleChange = (value, viewUpdate) => {
-        const cursorPosition = viewUpdate.state.selection.main.head;
-        const fixedLinesCount = fixedBoilerplate.split('\n').length;
-
-        const cursorLine = viewUpdate.state.doc.lineAt(cursorPosition).number;
-
-        // Prevent editing within the fixed boilerplate text
-        if (cursorLine < fixedLinesCount) {
-            // Revert to the previous state
-            setCode(fixedBoilerplate);
-        } else {
-            // Update state if not editing the boilerplate
-            setCode(value);
-        }
-    };
-
 
 
     //Suggestions
