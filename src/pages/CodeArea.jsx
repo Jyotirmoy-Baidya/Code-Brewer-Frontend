@@ -27,12 +27,30 @@ const options = [
 
 const CodeArea = () => {
 
+
+    const boilerplateCode = (lang) => {
+        switch (lang) {
+            case 'java':
+                return `class TempCode {
+        // write your code here . . .
+}`;
+            case 'cpp':
+                return `class TempCode {
+      // write your code here . . .
+}`;
+            default:
+                return '';
+        }
+    };
+
+
     const [runCodeLoading, setRunCodeLoading] = useState(false);
     const [language, setLanguage] = useState('java'); // Default to java
     const [input, setInput] = useState(''); // New state for user input
     const [output, setOutput] = useState('');
     const [metrics, setMetrics] = useState({ time: '', memory: '' });
-    const [code, setCode] = useState("");
+    // const [code, setCode] = useState("");
+    const [code, setCode] = useState(boilerplateCode('java'));
 
 
     function extractClassName(code) {
