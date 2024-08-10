@@ -21,7 +21,7 @@ const CustomDropdown = ({ options, value, onChange }) => {
                 </svg>
             </button>
             {isOpen && (
-                <div className="absolute z-10 mt-1 w-full py-1 bg-gray-300 opacity-80 rounded-md shadow-lg">
+                <div className="absolute z-10 mt-1 w-full py-1 bg-gray-300 opacity-95 rounded-md shadow-lg">
                     {options.map((option) => (
                         <button
                             key={option.value}

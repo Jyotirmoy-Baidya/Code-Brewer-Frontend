@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from "../components/basic/Header"
 import { IoSearch } from 'react-icons/io5';
 import { NavLink } from 'react-router-dom';
 import { FaArrowCircleRight } from 'react-icons/fa';
+import axios from 'axios';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 const problemstatements = [
     {
@@ -35,6 +37,47 @@ const problemstatements = [
 
 const ProblemStatements = () => {
     const [search, setSearch] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const [problemStatementList, setProblemStatementList] = useState([]);
+    const fetchAllQuestions = async () => {
+        try {
+            // Show loading indicator if necessary
+            console.log('Fetching questions...');
+            setLoading(true);
+
+            const response = await axios.get('http://localhost:3010/api/v1/question/all');
+
+            // Handle success
+            if (response.status === 200) {
+                console.log('Questions fetched successfully:', response.data);
+                setProblemStatementList(response.data); // Return the data for further use
+            } else {
+                console.error('Unexpected response code:', response.status);
+                return null;
+            }
+        } catch (error) {
+            // Handle error
+            if (error.response) {
+                console.error('Server responded with an error:', error.response.data);
+            } else if (error.request) {
+                console.error('Request made, but no response received:', error.request);
+            } else {
+                console.error('Error in setting up the request:', error.message);
+            }
+            return null; // Return null to signify the failure
+        } finally {
+            // Hide loading indicator if necessary
+            setLoading(false);
+            console.log('Fetching complete.');
+        }
+    };
+
+    useEffect(() => {
+        fetchAllQuestions();
+    }, [])
+
+
     return (
         <>
             <Header />
@@ -51,18 +94,19 @@ const ProblemStatements = () => {
                 <hr />
                 <div className="p-2 grow grid grid-cols-2 gap-10 overflow-scroll hide-scrollbar contest-list">
                     {
-                        problemstatements.map((problem, i) => {
-                            if (problem.name.toUpperCase().includes(search.toUpperCase()))
-                                return (
-                                    <NavLink to={`/problem/${problem.problemId}`} key={i} className=' border-l border-r border-primary h-24 rounded-lg flex items-center justify-between px-4 py-4 shadow shadow-primary active:shadow-none'>
-                                        <div className=' flex flex-col gap-2'>
-                                            <div className='text-lg font-bold tracking-wider uppercase'>{problem.name}</div>
-                                            <div className={`text-xs ${problem.difficulty == 'Easy' ? 'text-primary' : problem.difficulty == 'Medium' ? 'text-blue-400' : 'text-red-400'} flex`}>{problem.difficulty}</div>
-                                        </div>
-                                        <FaArrowCircleRight className='text-3xl text-primary' />
-                                    </NavLink>
-                                )
-                        })
+                        loading === true ? <div className='flex text-xl gap-4 items-center'>Fetching questions<AiOutlineLoading3Quarters className='text-lg loading-spin' /></div> :
+                            problemStatementList.map((problem, i) => {
+                                if (problem.title.toUpperCase().includes(search.toUpperCase()))
+                                    return (
+                                        <NavLink to={`/problem/${problem._id}`} key={i} className=' border-l border-r border-primary h-24 rounded-lg flex items-center justify-between px-4 py-4 shadow shadow-primary active:shadow-none'>
+                                            <div className=' flex flex-col gap-2'>
+                                                <div className='text-lg font-bold tracking-wider uppercase'>{problem.title}</div>
+                                                <div className={`text-xs ${problem.difficulty == 'Easy' ? 'text-primary' : problem.difficulty == 'Medium' ? 'text-blue-400' : 'text-red-400'} flex`}>{problem.difficulty}</div>
+                                            </div>
+                                            <FaArrowCircleRight className='text-3xl text-primary' />
+                                        </NavLink>
+                                    )
+                            })
                     }
                 </div>
             </div>

@@ -23,13 +23,13 @@ function CodingPlayground({ code, setCode, language, input, setInput, output, me
 
       {/* Input, Output*/}
       {/* Input Section */}
-      <label for="Option3" class="flex cursor-pointer items-start gap-2">
-        <div class="flex items-center">
+      <label htmlFor="Option3" className="flex cursor-pointer items-start gap-2">
+        <div className="flex items-center">
           &#8203;
-          <input type="checkbox" class="size-4 rounded border-gray-300" id="Option3" onClick={() => setCustomInput(!customInput)} />
+          <input type="checkbox" className="size-4 rounded border-gray-300" id="Option3" onClick={() => setCustomInput(!customInput)} />
         </div>
         <div>
-          <strong class="font-medium text-sm text-gray-200"> Custom Input </strong>
+          <strong className="font-medium text-sm text-gray-200"> Custom Input </strong>
         </div>
       </label>
       {
