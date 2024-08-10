@@ -89,7 +89,7 @@ const CodeArea = () => {
 
 
         setRunCodeLoading(true)
-        axiosInstance.post('http://localhost:3010/api/v1/compiler/execute', { language, code: codepost, input })
+        axiosInstance.post('http://localhost:3010/api/v1/compiler/execute', { language, code: codepost, input,className })
             .then(response => {
                 console.log(response);
                 setOutput(response.data.output);
