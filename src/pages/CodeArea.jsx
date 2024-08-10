@@ -178,7 +178,7 @@ const CodeArea = () => {
                             autocompletion({ override: [customCompletions] }), // Add autocompletion
                             closeBrackets()   // Optional: Automatically close brackets and quotes
                         ]}
-                        onChange={(e) => setCode(e.target.value)}
+                        onChange={(value) => setCode(value)}
                         theme={oneDark}
                         className="text-lg h-[100%] max-h-[100%] bg-gray-800 overflow-scroll design-scrollbar"
                     />
