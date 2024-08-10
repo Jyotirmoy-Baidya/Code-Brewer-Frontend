@@ -1,0 +1,51 @@
+.podium {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 20px;
+    margin-top: 50px;
+}
+
+.podium-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 10px 10px 0 0;
+    text-align: center;
+    color: #333;
+    font-weight: bold;
+}
+
+.first {
+    height: 150px;
+    background-color: rgb(238, 202, 0);
+}
+
+.second {
+    height: 120px;
+    background-color: silver;
+}
+
+.third {
+    height: 100px;
+    background-color: #a96826;
+    /* Bronze */
+}
+
+.position {
+    font-size: 18px;
+}
+
+.player {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.score {
+    font-size: 14px;
+    margin-top: 5px;
+}

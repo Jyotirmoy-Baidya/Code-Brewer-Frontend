@@ -11,6 +11,8 @@ import CodeArea from "./pages/CodeArea"
 import Broiler from "./components/basic/Broiler"
 import { useState } from "react"
 import EnterUsernamePopUp from "./components/EnterUsernamePopUp"
+import Podium from "./components/podium/Podium"
+import CreateContest from "./pages/CreateContest"
 
 const App = () => {
   const [usernamePopUp, setUsernamePopUp] = useState(false);
@@ -20,14 +22,19 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/contests" element={<Contests />} />
           <Route path="/contestactive/:id" element={<ActiveContest />} />
           <Route path="/contest/problem/:contestcode/:problemid" element={<ContestProblem />} />
           <Route path="/problemstatements" element={<ProblemStatements />} />
           <Route path="/problem/:problemid" element={<Problem />} />
           <Route path="/createproblem" element={<CreateProblem />} />
           <Route path="/codearea" element={<CodeArea />} />
-          <Route path="/test" element={<Broiler />} />
+          <Route path="/contests" element={<Contests />} />
+          <Route path="/createcontest" element={<CreateContest />} />
+          <Route path="/test" element={<Podium players={[
+            { name: 'Alice', score: 120 },
+            { name: 'Bob', score: 110 },
+            { name: 'Charlie', score: 105 },
+          ]} />} />
           <Route path="*" element={<Landing />} />
         </Routes>
       </BrowserRouter>

@@ -3,6 +3,7 @@ import Header from "../components/basic/Header"
 import { IoSearch } from "react-icons/io5";
 
 import ContestBlock from "../components/ContestBlock";
+import { NavLink } from "react-router-dom";
 
 const contests = [
     { name: "Contest A", code: "WEQXY5I" },
@@ -25,7 +26,7 @@ const Contests = () => {
                         <button className='text-primary text-2xl'><IoSearch /></button>
                     </div>
                     <div className="flex items-center justify-end w-1/2">
-                        <button className="bg-blue-500 py-2 px-4 rounded-md text-black font-plex-mono">Create Contest</button>
+                        <NavLink to={"/createcontest"} className="bg-blue-500 py-2 px-4 rounded-md text-black font-plex-mono" >Create Contest</NavLink>
                     </div>
                 </div>
                 <hr />
