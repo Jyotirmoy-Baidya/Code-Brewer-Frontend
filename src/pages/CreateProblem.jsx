@@ -2,10 +2,8 @@ import React, { useState } from 'react'
 import Header from '../components/basic/Header'
 import { NavLink } from 'react-router-dom';
 import { FaArrowCircleLeft, FaEdit } from 'react-icons/fa';
-import { RiDeleteBin2Line } from 'react-icons/ri';
 import { ImBin2 } from 'react-icons/im';
-import Popup from 'reactjs-popup';
-import axios from 'axios';
+import axiosInstance from '../utils/AxiosInstance';
 
 const CreateProblem = () => {
     const [title, setTitle] = useState("");
@@ -66,7 +64,15 @@ const CreateProblem = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:3010/api/v1/question/add', {
+            console.log({
+                title,
+                description: statement,  // Assuming description corresponds to statement
+                difficulty,
+                constraints,
+                testCases,
+                author,
+            });
+            const response = await axiosInstance.post('http://localhost:3010/api/v1/question/add', {
                 title,
                 description: statement,  // Assuming description corresponds to statement
                 difficulty,

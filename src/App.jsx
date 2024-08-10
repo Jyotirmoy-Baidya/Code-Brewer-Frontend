@@ -9,10 +9,14 @@ import CreateProblem from "./pages/CreateProblem"
 import { Toaster } from "react-hot-toast"
 import CodeArea from "./pages/CodeArea"
 import Broiler from "./components/basic/Broiler"
+import { useState } from "react"
+import EnterUsernamePopUp from "./components/EnterUsernamePopUp"
 
 const App = () => {
+  const [usernamePopUp, setUsernamePopUp] = useState(false);
+  const [contestCode, setContestCode] = useState("");
   return (
-    <div className="h-screen w-screen bg-black text-white">
+    <div className="relative h-screen w-screen bg-black text-white">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Landing />} />

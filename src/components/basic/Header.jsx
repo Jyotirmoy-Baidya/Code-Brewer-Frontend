@@ -7,7 +7,7 @@ const Header = () => {
     return (
         <div className='h-[16%] flex items-center py-8 px-8'>
             <div className='w-[20%]'>
-                <h1 className='text-3xl font-bold tracking-widest font-helvetica'>CodeCrafters</h1>
+                <h1 className='cursor-pointer text-3xl font-bold tracking-widest font-helvetica' onClick={() => navigate("/")}>CodeCrafters</h1>
             </div>
             <div className='text-lg font-plex-mono px-16 flex justify-between items-center w-[60%]'>
                 <NavLink to="/codearea" className={`${location.pathname === '/codearea' && "text-primary"}`}>Code Area</NavLink>
