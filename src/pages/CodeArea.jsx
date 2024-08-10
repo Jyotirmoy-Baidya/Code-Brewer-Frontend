@@ -15,6 +15,9 @@ import toast from 'react-hot-toast';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import axiosInstance from '../utils/AxiosInstance';
 
+import { autocompletion, completeFromList } from '@codemirror/autocomplete';
+import { closeBrackets } from '@codemirror/autocomplete';
+
 
 
 const options = [
@@ -90,6 +93,67 @@ const CodeArea = () => {
     };
 
 
+    const javaKeywords = [
+        // Java Keywords
+        'abstract', 'assert', 'boolean', 'break', 'byte', 'case', 'catch', 'char', 'class', 
+        'const', 'continue', 'default', 'do', 'double', 'else', 'enum', 'extends', 'final', 
+        'finally', 'float', 'for', 'goto', 'if', 'implements', 'import', 'instanceof', 'int', 
+        'interface', 'long', 'native', 'new', 'null', 'package', 'private', 'protected', 
+        'public', 'return', 'short', 'static', 'strictfp', 'super', 'switch', 'synchronized', 
+        'this', 'throw', 'throws', 'transient', 'try', 'void', 'volatile', 'while', 
+        'true', 'false',
+      
+        // Java Built-in Classes
+        'String', 'StringBuilder', 'StringBuffer', 'Object', 'Class', 'System', 'Runtime', 'Thread', 
+        'Throwable', 'Exception', 'RuntimeException', 'Error', 'Integer', 'Long', 'Short', 'Byte', 
+        'Float', 'Double', 'Character', 'Boolean', 'Math', 'Enum', 'Void', 'Process', 'ThreadGroup', 
+        'Package', 'SecurityManager', 'StackTraceElement', 'Throwable', 'Exception', 'RuntimeException',
+      
+        // Java.util Classes
+        'ArrayList', 'LinkedList', 'HashMap', 'HashSet', 'TreeMap', 'TreeSet', 'Hashtable', 'Vector', 
+        'Stack', 'Queue', 'Deque', 'PriorityQueue', 'Arrays', 'Collections', 'Calendar', 'Date', 
+        'TimeZone', 'UUID', 'Optional', 'Scanner', 'Random',
+      
+        // Java.io Classes
+        'File', 'InputStream', 'OutputStream', 'FileInputStream', 'FileOutputStream', 'BufferedReader', 
+        'BufferedWriter', 'PrintWriter', 'ObjectInputStream', 'ObjectOutputStream', 'Serializable', 
+        'Reader', 'Writer', 'FileReader', 'FileWriter', 'PrintStream', 'FileDescriptor',
+      
+        // Java.nio Classes
+        'ByteBuffer', 'CharBuffer', 'IntBuffer', 'ShortBuffer', 'LongBuffer', 'MappedByteBuffer', 
+        'FileChannel', 'Path', 'Paths', 'Files',
+      
+        // Java.net Classes
+        'URL', 'URI', 'InetAddress', 'Socket', 'ServerSocket', 'HttpURLConnection',
+      
+        // Java.sql Classes
+        'DriverManager', 'Connection', 'Statement', 'PreparedStatement', 'ResultSet', 'SQLException', 
+        'Date', 'Time', 'Timestamp',
+      
+        // Java.time Classes
+        'LocalDate', 'LocalTime', 'LocalDateTime', 'ZonedDateTime', 'Duration', 'Period', 'Instant', 
+        'ZoneId', 'OffsetDateTime', 'Year', 'Month', 'DayOfWeek',
+      
+        // Java Built-in Interfaces
+        'Runnable', 'Comparable', 'CharSequence', 'Cloneable', 'AutoCloseable', 'List', 'Set', 'Map', 
+        'Queue', 'Deque', 'Iterator', 'Collection', 'Comparator', 'Enumeration', 'Closeable', 
+        'DataInput', 'DataOutput', 'Flushable', 'Readable', 'Serializable', 'ReadableByteChannel', 
+        'WritableByteChannel', 'Key', 'PrivateKey', 'PublicKey', 'Principal', 'Temporal', 
+        'TemporalAccessor', 'TemporalAdjuster', 'TemporalAmount', 'Chronology', 'ChronoLocalDate', 
+        'ChronoLocalDateTime',
+      
+        // Notable Annotations
+        'Override', 'Deprecated', 'SuppressWarnings', 'FunctionalInterface', 'SafeVarargs', 'Retention', 
+        'Target', 'Inherited', 'Documented'
+      ];
+      
+      
+      
+      const customCompletions = completeFromList(
+        javaKeywords.map(javaKeywords => ({ label: javaKeywords }))
+      );
+
+
     return (
         <>
             <Header />
@@ -110,7 +174,11 @@ const CodeArea = () => {
                     </div>
                     <CodeMirror
                         value={code}
-                        extensions={[getLanguageExtension(language)]}
+                        extensions={[
+                            getLanguageExtension(language),
+                            autocompletion({ override: [customCompletions] }), // Add autocompletion
+                            closeBrackets()   // Optional: Automatically close brackets and quotes
+                          ]}
                         theme={oneDark}
                         onChange={(value) => setCode(value)}
                         className="text-lg h-[100%] max-h-[100%] bg-gray-800 overflow-scroll design-scrollbar"
