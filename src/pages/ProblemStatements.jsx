@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { FaArrowCircleRight } from 'react-icons/fa';
 import axios from 'axios';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import axiosInstance from '../utils/AxiosInstance';
 
 const problemstatements = [
     {
@@ -46,7 +47,7 @@ const ProblemStatements = () => {
             console.log('Fetching questions...');
             setLoading(true);
 
-            const response = await axios.get('http://localhost:3010/api/v1/question/all');
+            const response = await axiosInstance.get('http://localhost:3010/api/v1/question/all');
 
             // Handle success
             if (response.status === 200) {

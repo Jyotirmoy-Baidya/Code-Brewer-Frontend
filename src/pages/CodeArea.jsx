@@ -10,10 +10,10 @@ import { cpp } from '@codemirror/lang-cpp';
 import { java } from '@codemirror/lang-java';
 import { python } from '@codemirror/lang-python';
 import { oneDark } from '@codemirror/theme-one-dark';
-import axios from 'axios';
 import CustomDropdown from '../components/basic/CustomDropDown';
 import toast from 'react-hot-toast';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import axiosInstance from '../utils/AxiosInstance';
 
 
 
@@ -36,13 +36,11 @@ const CodeArea = () => {
     const [customInput, setCustomInput] = useState(false);
 
     const runCode = () => {
-        // console.log(code);
-        // const codepost=`${code}`;
         const codepost = convertJavaToJSString(code);
 
 
         setRunCodeLoading(true)
-        axios.post('http://localhost:3010/api/v1/compiler/execute', { language, code: codepost, input })
+        axiosInstance.post('http://localhost:3010/api/v1/compiler/execute', { language, code: codepost, input })
             .then(response => {
                 console.log(response);
                 setOutput(response.data.output);
@@ -59,9 +57,6 @@ const CodeArea = () => {
             }).finally(() => setRunCodeLoading(false));
     };
 
-    const renCodeOnTestCases = async () => {
-
-    }
 
     function convertJavaToJSString(javaCode) {
         // Step 1: Remove newlines and excessive whitespace
@@ -70,7 +65,6 @@ const CodeArea = () => {
         // Step 2: Escape double quotes and backslashes
         const jsCompatibleString = singleLineCode
             .replace(/\\/g, '\\\\')  // Escape backslashes
-        // .replace(/"/g, '\\"');   // Escape double quotes
 
         return jsCompatibleString;
     }

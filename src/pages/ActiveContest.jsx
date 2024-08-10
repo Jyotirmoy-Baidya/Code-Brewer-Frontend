@@ -39,7 +39,7 @@ const dsaProblems = [
 ];
 
 
-const endTime = "2024-08-09 22:30:00"
+const endTime = "2024-08-10 22:30:00"
 
 const ActiveContest = () => {
     const calculateTimeLeft = () => {

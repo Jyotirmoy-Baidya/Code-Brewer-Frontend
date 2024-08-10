@@ -34,24 +34,27 @@ function CodingPlayground({ code, setCode, language, input, setInput, output, me
       </label>
       {
         customInput &&
-        <div className='min-h-48 flex flex-col'>
-          <h2 className="text-lg mb-1 font-medium">Input :</h2>
-          <textarea
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className="bg-gray-800 outline-none p-2 rounded w-full mb-4 resize-none h-[100%] overflow-scroll design-scrollbar"
-          />
-        </div>
+        <>
+          <div className='min-h-48 flex flex-col'>
+            <h2 className="text-lg mb-1 font-medium">Input :</h2>
+            <textarea
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              className="bg-gray-800 outline-none p-2 rounded w-full mb-4 resize-none h-[100%] overflow-scroll design-scrollbar"
+            />
+          </div>
+        </>
       }
-
-
-
       {/* Output Section */}
       <div className='min-h-48 flex flex-col'>
         <h2 className="text-lg mb-1 font-medium">Output:</h2>
         <div className="bg-gray-800 outline-none p-2 rounded w-full mb-4 h-full overflow-scroll design-scrollbar"><pre>{output}</pre></div>
       </div>
+
+
+
+
 
       {/* Metrics Section */}
       <div className='flex flex-col'>
