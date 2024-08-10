@@ -22,8 +22,8 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/contestactive/:id" element={<ActiveContest />} />
-          <Route path="/contest/problem/:contestcode/:problemid" element={<ContestProblem />} />
+          <Route path="/contestactive/:code" element={<ActiveContest />} />
+          <Route path="/contest/problem/:code/:problemid" element={<ContestProblem />} />
           <Route path="/problemstatements" element={<ProblemStatements />} />
           <Route path="/problem/:problemid" element={<Problem />} />
           <Route path="/createproblem" element={<CreateProblem />} />

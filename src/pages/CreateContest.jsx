@@ -5,14 +5,17 @@ import { FaArrowCircleLeft, FaArrowCircleRight } from 'react-icons/fa'
 import { IoSearch } from 'react-icons/io5'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import axiosInstance from '../utils/AxiosInstance'
+import toast from 'react-hot-toast'
 
 const CreateContest = () => {
     const [title, setTitle] = useState("");
+    const [endTime, setEndTime] = useState('');
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(false);
     const [problemStatementList, setProblemStatementList] = useState([]);
 
     const [selectedProblemStatements, setSelectedProblemStatementList] = useState([]);
+
 
     //Fetching all problem statements
     const fetchAllQuestions = async () => {
@@ -22,6 +25,7 @@ const CreateContest = () => {
             setLoading(true);
 
             const response = await axiosInstance.get('http://localhost:3010/api/v1/question/all');
+            console.log(response);
 
             // Handle success
             if (response.status === 200) {
@@ -69,6 +73,42 @@ const CreateContest = () => {
         }
     };
 
+    const createContest = async () => {
+        // Validate the inputs
+        if (!title || !endTime || !selectedProblemStatements || selectedProblemStatements.length === 0) {
+            toast.error("Please fill all the fields");
+            return; // Exit the function if validation fails
+        }
+
+        const questions = selectedProblemStatements.map(problem => problem._id);
+
+
+        try {
+            // Set startTime to the current time
+            const startTime = new Date().toISOString();
+
+            // Construct the request body
+            const requestBody = {
+                title,
+                startTime,
+                endTime,
+                questions
+            };
+
+            console.log(requestBody);
+
+            // Send POST request to the backend to create the contest
+            const response = await axiosInstance.post('http://localhost:3010/api/v1/contest/add', requestBody);
+
+            // Handle the response (e.g., show success message, redirect, etc.)
+            console.log('Contest created successfully:', response.data);
+
+        } catch (error) {
+            // Handle any errors (e.g., show error message)
+            console.error('Error creating contest:', error);
+        }
+    };
+
 
     return (
         <>
@@ -77,19 +117,32 @@ const CreateContest = () => {
                 <div className='flex items-center gap-4'>
                     <NavLink to={`/contests`}><FaArrowCircleLeft className='text-2xl text-primary' /></NavLink>
                     <div className='text-4xl'>Create Contest</div>
-                    <button className='text-lg bg-yellow-400 font-plex-mono px-4 py-2 text-black ms-auto rounded-md'>Create Contest</button>
+                    <button className='text-lg bg-yellow-400 font-plex-mono px-4 py-2 text-black ms-auto rounded-md' onClick={() => createContest()}>Create Contest</button>
                 </div>
 
                 <hr />
 
                 <div className='flex gap-4'>
                     {/* Left section for the contest  */}
-                    <div className='w-1/2 border-r-2 border-double grow pe-10'>
-                        <div className='h-24 w-full flex flex-col'>
-                            <div className='text-2xl mb-2'>Contest Name</div>
+                    <div className='w-1/2 grow flex flex-col gap-2 pe-10'>
+                        <div className='w-full flex flex-col'>
+                            <div className='flex items-center justify-between'>
+                                <div className='text-2xl mb-2'>Contest Name</div>
+                                <div className='flex items-center gap-2 pt-1 pb-3'>
+                                    <div className=''>EndTime:</div>
+                                    <input
+                                        type="datetime-local"
+                                        id="contest-date"
+                                        value={endTime}
+                                        onChange={(e) => setEndTime(e.target.value)}
+                                        className="text-lg w-full p-2 bg-slate-800 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                    />
+                                </div>
+                            </div>
                             <input type="text" className='py-2 px-2 rounded-sm bg-transparent outline-none border border-gray-500  focus:border-primary focus:shadow focus:shadow-primary' placeholder='Contest Name' onChange={(e) => setTitle(e.target.value)} value={`${title}`} />
                         </div>
 
+                        <hr />
                         {/* selected problems  */}
                         <div className='max-h-96 pt-1 pb-3 flex flex-col overflow-scroll gap-4 design-scrollbar'>
                             {selectedProblemStatements.map((problem, i) => (
@@ -120,12 +173,12 @@ const CreateContest = () => {
                                         .map((problem, i) => {
                                             if (problem.title.toUpperCase().includes(search.toUpperCase()))
                                                 return (
-                                                    <div key={i} className=' border-l border-r border-blue-400 h-24 rounded-lg flex items-center justify-between px-4 py-4 shadow shadow-blue-400 active:shadow-none'>
+                                                    <div key={i} className=' border-l border-r border-blue-400 h-24 rounded-lg flex items-center justify-between px-4 py-4 shadow shadow-blue-400 active:shadow-none bg-primary-black'>
                                                         <div className=' flex flex-col gap-2'>
                                                             <div className='text-lg font-bold tracking-wider uppercase'>{problem.title}</div>
                                                             <div className={`text-xs ${problem.difficulty == 'Easy' ? 'text-primary' : problem.difficulty == 'Medium' ? 'text-blue-400' : 'text-red-400'} flex`}>{problem.difficulty}</div>
                                                         </div>
-                                                        <div className='border py-2 px-3 rounded-md bg-blue-50 bg-opacity-10 tracking-wider font-plex-mono text-blue-400' onClick={() => selectProblemForContest(problem)} >Select</div>
+                                                        <div className='border py-2 px-3 rounded-md bg-blue-50 bg-opacity-10 tracking-wider font-plex-mono text-blue-400 cursor-pointer' onClick={() => selectProblemForContest(problem)} >Select</div>
                                                     </div>
                                                 )
                                         })

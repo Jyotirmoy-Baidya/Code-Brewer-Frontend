@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const ActiveContestHeader = () => {
+const ActiveContestHeader = ({ endTime }) => {
     const navigate = useNavigate()
     return (
         <div className='h-[16%] flex items-center justify-between py-8 px-8'>
@@ -10,7 +10,12 @@ const ActiveContestHeader = () => {
             </div>
 
             <div className='flex justify-end w-[20%]'>
-                <button onClick={() => navigate("/codearea")} className='min-h-12 bg-primary text-black rounded-md px-4 font-plex-mono hover:scale-[102%] active:scale-[100%]'>Finish Contest</button>
+                {
+                    new Date(endTime) < new Date() ?
+                        <button onClick={() => navigate("/")} className='min-h-12 bg-primary text-black rounded-md px-4 font-plex-mono hover:scale-[102%] active:scale-[100%]'>Exit Contest</button>
+                        :
+                        <button onClick={() => navigate("/")} className='min-h-12 bg-primary text-black rounded-md px-4 font-plex-mono hover:scale-[102%] active:scale-[100%]'>Finish Contest</button>
+                }
             </div>
         </div>
     )
