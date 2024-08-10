@@ -35,7 +35,27 @@ const CodeArea = () => {
     const [metrics, setMetrics] = useState({ time: '', memory: '' });
     const [customInput, setCustomInput] = useState(false);
 
+
+    function extractClassName(code) {
+        const classNameMatch = code.match(/class\s+(\w+)/);
+        return classNameMatch ? classNameMatch[1] : null;
+    }
+
+
     const runCode = () => {
+
+
+        const className = extractClassName(code);
+
+        if (className == null) {
+            console.log('Error: No class name found your in the code.');
+            setOutput('Error: No class name found your in the code.');
+            return;
+        }
+
+        console.log('class name=', className);
+
+
         const codepost = convertJavaToJSString(code);
 
 
