@@ -27,19 +27,69 @@ const options = [
 
 const CodeArea = () => {
 
+
+    const boilerplateCode = (lang) => {
+        switch (lang) {
+            case 'java':
+                return `class TempCode {
+  // write your code here . . .
+}`;
+            case 'cpp':
+                return `class TempCode {
+  // write your code here . . .
+}`;
+            default:
+                return '';
+        }
+    };
+
+
     const [runCodeLoading, setRunCodeLoading] = useState(false);
     const [language, setLanguage] = useState('java'); // Default to java
     const [input, setInput] = useState(''); // New state for user input
     const [output, setOutput] = useState('');
     const [metrics, setMetrics] = useState({ time: '', memory: '' });
-    const [code, setCode] = useState("");
+    // const [code, setCode] = useState("");
+    const [code, setCode] = useState(boilerplateCode('java'));
+
+
+    // function extractClassName(code) {
+    //     const classNameMatch = code.match(/class\s+(\w+)/);
+    //     return classNameMatch ? classNameMatch[1] : null;
+    // }
+    function extractClassName(code) {
+        // Regex to match the class that contains the main method
+        const mainClassMatch = code.match(/class\s+(\w+)\s+.*\{[^]*?public\s+static\s+void\s+main\s*\(\s*String\s*\[\s*\]\s*args\s*\)\s*\{[^]*?\}/);
+        
+        // If a class with the main method is found, return its name
+        if (mainClassMatch) {
+          return mainClassMatch[1];
+        }
+      
+        // Otherwise, return null
+        return null;
+    }
+
 
     const runCode = () => {
+
+
+        const className = extractClassName(code);
+
+        if (className == null) {
+            console.log('Error: No class with main method found in your code.');
+            setOutput('Error: No class with main method found in your code.');
+            return;
+        }
+
+        console.log('class name=', className);
+
+
         const codepost = convertJavaToJSString(code);
 
 
         setRunCodeLoading(true)
-        axiosInstance.post('http://localhost:3010/api/v1/compiler/execute', { language, code: codepost, input })
+        axiosInstance.post('http://localhost:3010/api/v1/compiler/execute', { language, code: codepost, input,className })
             .then(response => {
                 console.log(response);
                 setOutput(response.data.output);
@@ -143,7 +193,10 @@ const CodeArea = () => {
 
         // Notable Annotations
         'Override', 'Deprecated', 'SuppressWarnings', 'FunctionalInterface', 'SafeVarargs', 'Retention',
-        'Target', 'Inherited', 'Documented'
+        'Target', 'Inherited', 'Documented',
+
+        //
+        'out', 'print', 'println'
     ];
 
 
