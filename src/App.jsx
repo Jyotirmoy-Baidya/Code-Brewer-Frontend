@@ -6,6 +6,7 @@ import Problem from "./pages/Problem"
 import ProblemStatements from "./pages/ProblemStatements"
 import ContestProblem from "./pages/ContestProblem"
 import CreateProblem from "./pages/CreateProblem"
+import { Toaster } from "react-hot-toast"
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="*" element={<Landing />} />
         </Routes>
       </BrowserRouter>
+      <Toaster />
     </div>
   )
 }

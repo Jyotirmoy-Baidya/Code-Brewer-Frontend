@@ -19,6 +19,7 @@ const Header = () => {
                 <button onClick={() => navigate("/codearea")} className='min-h-12 bg-primary text-black rounded-md px-4 font-plex-mono hover:scale-[102%] active:scale-[100%]'>Start Code</button>
             </div>
         </div>
+
     )
 }
 
