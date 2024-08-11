@@ -13,6 +13,7 @@ const ActiveContestHeader = ({ endTime }) => {
                 withCredentials: true
             });
             console.log('Contest finished successfully:', response.data);
+            navigate('/');
         } catch (error) {
             console.error('Error finishing contest:', error);
         }

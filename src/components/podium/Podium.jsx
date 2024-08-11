@@ -9,7 +9,7 @@ const Podium = ({ players }) => {
                 <div className="flex flex-col justify-end items-center w-24 p-4 bg-gray-200 rounded-t-lg h-40">
                     <div className="text-lg font-bold">2nd</div>
                     <div className="mt-2 text-lg">{players[1].name}</div>
-                    <div className="mt-1 text-sm">{players[1].questionSolved} solved</div>
+                    <div className="mt-1 text-sm">{players[1].noq} solved</div>
                 </div>
             }
             {
@@ -17,7 +17,7 @@ const Podium = ({ players }) => {
                 <div className="flex flex-col justify-end items-center w-24 p-4 bg-yellow-400 rounded-t-lg h-52">
                     <div className="text-lg font-bold">1st</div>
                     <div className="mt-2 text-lg">{players[0].name}</div>
-                    <div className="mt-1 text-sm">{players[0].questionSolved} solved</div>
+                    <div className="mt-1 text-sm">{players[0].noq} solved</div>
                 </div>
             }
             {
@@ -25,7 +25,7 @@ const Podium = ({ players }) => {
                 <div className="flex flex-col justify-end items-center w-24 p-4 bg-[#cd7f32] rounded-t-lg h-32">
                     <div className="text-lg font-bold">3rd</div>
                     <div className="mt-2 text-lg">{players[2].name}</div>
-                    <div className="mt-1 text-sm">{players[2].questionSolved} solved</div>
+                    <div className="mt-1 text-sm">{players[2].noq} solved</div>
                 </div>
             }
         </div>
