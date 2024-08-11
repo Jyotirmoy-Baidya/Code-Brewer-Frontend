@@ -60,12 +60,12 @@ const CodeArea = () => {
     function extractClassName(code) {
         // Regex to match the class that contains the main method
         const mainClassMatch = code.match(/class\s+(\w+)\s+.*\{[^]*?public\s+static\s+void\s+main\s*\(\s*String\s*\[\s*\]\s*args\s*\)\s*\{[^]*?\}/);
-        
+
         // If a class with the main method is found, return its name
         if (mainClassMatch) {
-          return mainClassMatch[1];
+            return mainClassMatch[1];
         }
-      
+
         // Otherwise, return null
         return null;
     }
@@ -74,7 +74,7 @@ const CodeArea = () => {
     const runCode = () => {
 
 
-        const className = extractClassName(code);
+        const className = "TestCode";
 
         if (className == null) {
             console.log('Error: No class with main method found in your code.');
@@ -89,7 +89,7 @@ const CodeArea = () => {
 
 
         setRunCodeLoading(true)
-        axiosInstance.post('http://localhost:3010/api/v1/compiler/execute', { language, code: codepost, input,className })
+        axiosInstance.post('http://localhost:3010/api/v1/compiler/execute', { language, code: codepost, input, className })
             .then(response => {
                 console.log(response);
                 setOutput(response.data.output);
