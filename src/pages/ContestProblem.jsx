@@ -33,11 +33,11 @@ const Problem = () => {
         switch (lang) {
             case 'java':
                 return `class TempCode {
-  // write your code here . . .
+
 }`;
             case 'cpp':
                 return `class TempCode {
-  // write your code here . . .
+
 }`;
             default:
                 return '';
@@ -81,7 +81,7 @@ const Problem = () => {
     }
 
 
-    const runCodeWithTestCase = async (id) => {
+    const runCodeWithTestCase = async () => {
         const className = "TempCode";
 
         if (className == null) {
@@ -95,7 +95,9 @@ const Problem = () => {
 
         const codepost = convertJavaToJSString(code);
         setRunCodeLoading(true)
-        axiosInstance.post(`http://localhost:3010/api/v1/question/submit/${id}`, { language, code: codepost, className })
+        axiosInstance.post(`http://localhost:3010/api/v1/contest/submit/${params.problemid}`, { language, code: codepost, className }, {
+            withCredentials: true // This ensures cookies are sent with the request
+          })
             .then(response => {
                 console.log(response);
                 setTestCaseResult(response.data);

@@ -8,6 +8,7 @@ import { GiCrossMark } from 'react-icons/gi';
 import axiosInstance from '../utils/AxiosInstance';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import Timer from '../components/Timer';
+import { TiTickOutline } from 'react-icons/ti';
 
 
 
@@ -98,12 +99,15 @@ const ActiveContest = () => {
             const response = await axiosInstance.get("http://localhost:3010/api/v1/contest/getuser", {
                 withCredentials: true
             });
+            console.log('User data fetched successfully:', response.data.findUser.questions);
             setSolvedQuestionsId(response.data.findUser.questions);
         }
         catch (error) {
             console.log("Error fetching user data" + error);
         }
     }
+
+    
 
     useEffect(() => {
         fetchContestDetails();
@@ -112,7 +116,7 @@ const ActiveContest = () => {
 
     return (
         <>
-            <ActiveContestHeader endTime={contest.endTime} />
+            <ActiveContestHeader endTime={contest.endTime}/>
             {
                 loading ?
                     <div className='font-helvetica flex text-2xl text-white px-16 pt-4 pb-3'>
@@ -127,9 +131,36 @@ const ActiveContest = () => {
                         </div>
                         <hr className='border-[0.2px]' />
                         <div className='flex flex-col py-4 gap-5 w-1/2 overflow-scroll design-scrollbar'>
+                        {
+                            contest?.questions?.filter(
+                                (problem) => solvedQuestionsId.includes(problem._id))
+                                .map((ele, i) => {
+                                    if (new Date(contest.endTime) < new Date()) {
+                                        {/* if quiz ended return div and can't redirect to the problems anymore */ }
+                                        return (<div key={i} className=' border-l bg-primary-black border-r border-primary h-24 rounded-lg flex items-center justify-between px-4 py-4 shadow shadow-primary active:shadow-none'>
+                                            <div className=' flex flex-col gap-2'>
+                                                <div className='text-lg font-bold tracking-wider uppercase'>{ele.title}</div>
+                                                <div className={`text-xs ${ele.difficulty == 'Easy' ? 'text-primary' : ele.difficulty == 'Medium' ? 'text-blue-400' : 'text-red-400'} flex`}>{ele.difficulty}</div>
+                                            </div>
+                                            <TiTickOutline className='text-3xl text-primary' />
+                                        </div>)
+                                    }
+                                    else
+                                        return (
+                                            <NavLink to={`/contest/problem/${params.code}/${ele._id}`} key={i} className=' border-l border-r border-primary h-24 rounded-lg flex items-center justify-between px-4 py-4 shadow shadow-primary active:shadow-none'>
+                                                <div className='flex flex-col gap-2'>
+                                                    <div className='text-lg font-bold tracking-wider uppercase'>{ele.title}</div>
+                                                    <div className={`text-xs ${ele.difficulty == 'Easy' ? 'text-primary' : ele.difficulty == 'Medium' ? 'text-blue-400' : 'text-red-400'} flex`}>{ele.difficulty}</div>
+                                                </div>
+                                                <TiTickOutline className='text-3xl text-primary' />
+                                            </NavLink>
+                                        )
+                                })
+
+                        }
                             {
                                 contest?.questions?.filter(
-                                    (problem) => !solvedQuestionsId.includes(problem.id))
+                                    (problem) => !solvedQuestionsId.includes(problem._id))
                                     .map((ele, i) => {
                                         if (new Date(contest.endTime) < new Date()) {
                                             {/* if quiz ended return div and can't redirect to the problems anymore */ }

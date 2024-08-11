@@ -10,9 +10,9 @@ const Header = () => {
                 <h1 className='cursor-pointer text-3xl font-bold tracking-widest font-helvetica' onClick={() => navigate("/")}>CodeCrafters</h1>
             </div>
             <div className='text-lg font-plex-mono px-16 flex justify-between items-center w-[60%]'>
-                <NavLink to="/codearea" className={`${location.pathname === '/codearea' && "text-primary"}`}>Code Area</NavLink>
-                <NavLink to="/problemstatements" className={`${location.pathname === '/problemstatements' && "text-primary"}`}>Problem Statements</NavLink>
-                <NavLink to="/contests" className={`${location.pathname === '/contests' && "text-primary"}`}>Contests</NavLink>
+                <NavLink to="/codearea" className={`${location.pathname === '/codearea' && "text-primary"}`}>CodingPlayground</NavLink>
+                <NavLink to="/problemstatements" className={`${location.pathname === '/problemstatements' && "text-primary"}`}>CodingArena</NavLink>
+                <NavLink to="/contests" className={`${location.pathname === '/contests' && "text-primary"}`}>CodingBattleground</NavLink>
                 <NavLink to="/aboutus" className={`${location.pathname === '/aboutus' && "text-primary"}`}>About us</NavLink>
             </div>
             <div className='flex justify-end w-[20%]'>
