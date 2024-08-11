@@ -82,9 +82,7 @@ const Problem = () => {
 
 
     const runCodeWithTestCase = async (id) => {
-
-
-        const className = extractClassName(code);
+        const className = "TempCode";
 
         if (className == null) {
             console.log('Error: No class with main method found in your code.');
@@ -97,7 +95,7 @@ const Problem = () => {
 
         const codepost = convertJavaToJSString(code);
         setRunCodeLoading(true)
-        axiosInstance.post(`http://localhost:3010/api/v1/question/run/${id}`, { language, code: codepost, className })
+        axiosInstance.post(`http://localhost:3010/api/v1/question/submit/${id}`, { language, code: codepost, className })
             .then(response => {
                 console.log(response);
                 setTestCaseResult(response.data);
@@ -115,7 +113,7 @@ const Problem = () => {
         // console.log(code);
         // const codepost=`${code}`;
         const codepost = convertJavaToJSString(code);
-        const className = extractClassName(code);
+        const className = "TempCode";
         if (className == null) {
             console.log('Error: No class with main method found in your code.');
             setOutput('Error: No class with main method found in your code.');
