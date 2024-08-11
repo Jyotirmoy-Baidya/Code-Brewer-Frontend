@@ -68,6 +68,8 @@ const ActiveContest = () => {
     const [contest, setContest] = useState({});
     const [loading, setLoading] = useState(false);
 
+    const [solvedQuestionsId, setSolvedQuestionsId] = useState([]);
+
 
     //Fetch the contest details
     const fetchContestDetails = async () => {
@@ -90,8 +92,22 @@ const ActiveContest = () => {
         }
     };
 
+    //Get User Data
+    const getUserData = async () => {
+        try {
+            const response = await axiosInstance.get("http://localhost:3010/api/v1/contest/getuser", {
+                withCredentials: true
+            });
+            setSolvedQuestionsId(response.data.findUser.questions);
+        }
+        catch (error) {
+            console.log("Error fetching user data" + error);
+        }
+    }
+
     useEffect(() => {
         fetchContestDetails();
+        getUserData();
     }, [])
 
     return (
@@ -112,28 +128,30 @@ const ActiveContest = () => {
                         <hr className='border-[0.2px]' />
                         <div className='flex flex-col py-4 gap-5 w-1/2 overflow-scroll design-scrollbar'>
                             {
-                                contest?.questions?.map((ele, i) => {
-                                    if (new Date(contest.endTime) < new Date()) {
-                                        {/* if quiz ended return div and can't redirect to the problems anymore */ }
-                                        return (<div key={i} className=' border-l bg-primary-black border-r border-primary h-24 rounded-lg flex items-center justify-between px-4 py-4 shadow shadow-primary active:shadow-none'>
-                                            <div className=' flex flex-col gap-2'>
-                                                <div className='text-lg font-bold tracking-wider uppercase'>{ele.title}</div>
-                                                <div className={`text-xs ${ele.difficulty == 'Easy' ? 'text-primary' : ele.difficulty == 'Medium' ? 'text-blue-400' : 'text-red-400'} flex`}>{ele.difficulty}</div>
-                                            </div>
-                                            <FaArrowCircleRight className='text-3xl text-blue-500' />
-                                        </div>)
-                                    }
-                                    else
-                                        return (
-                                            <NavLink to={`/contest/problem/${params.code}/${ele._id}`} key={i} className=' border-l border-r border-primary h-24 rounded-lg flex items-center justify-between px-4 py-4 shadow shadow-primary active:shadow-none'>
+                                contest?.questions?.filter(
+                                    (problem) => !solvedQuestionsId.includes(problem.id))
+                                    .map((ele, i) => {
+                                        if (new Date(contest.endTime) < new Date()) {
+                                            {/* if quiz ended return div and can't redirect to the problems anymore */ }
+                                            return (<div key={i} className=' border-l bg-primary-black border-r border-primary h-24 rounded-lg flex items-center justify-between px-4 py-4 shadow shadow-primary active:shadow-none'>
                                                 <div className=' flex flex-col gap-2'>
                                                     <div className='text-lg font-bold tracking-wider uppercase'>{ele.title}</div>
                                                     <div className={`text-xs ${ele.difficulty == 'Easy' ? 'text-primary' : ele.difficulty == 'Medium' ? 'text-blue-400' : 'text-red-400'} flex`}>{ele.difficulty}</div>
                                                 </div>
-                                                <FaArrowCircleRight className='text-3xl text-primary' />
-                                            </NavLink>
-                                        )
-                                })
+                                                <FaArrowCircleRight className='text-3xl text-blue-500' />
+                                            </div>)
+                                        }
+                                        else
+                                            return (
+                                                <NavLink to={`/contest/problem/${params.code}/${ele._id}`} key={i} className=' border-l border-r border-primary h-24 rounded-lg flex items-center justify-between px-4 py-4 shadow shadow-primary active:shadow-none'>
+                                                    <div className=' flex flex-col gap-2'>
+                                                        <div className='text-lg font-bold tracking-wider uppercase'>{ele.title}</div>
+                                                        <div className={`text-xs ${ele.difficulty == 'Easy' ? 'text-primary' : ele.difficulty == 'Medium' ? 'text-blue-400' : 'text-red-400'} flex`}>{ele.difficulty}</div>
+                                                    </div>
+                                                    <FaArrowCircleRight className='text-3xl text-primary' />
+                                                </NavLink>
+                                            )
+                                    })
                             }
 
                         </div>

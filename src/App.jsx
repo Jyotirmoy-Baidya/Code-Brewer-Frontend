@@ -9,14 +9,20 @@ import CreateProblem from "./pages/CreateProblem"
 import { Toaster } from "react-hot-toast"
 import CodeArea from "./pages/CodeArea"
 import Broiler from "./components/basic/Broiler"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import EnterUsernamePopUp from "./components/EnterUsernamePopUp"
 import Podium from "./components/podium/Podium"
 import CreateContest from "./pages/CreateContest"
+import axiosInstance from "./utils/AxiosInstance"
+import Redirect from "./components/basic/Redirect"
 
 const App = () => {
-  const [usernamePopUp, setUsernamePopUp] = useState(false);
-  const [contestCode, setContestCode] = useState("");
+  //   try {
+  //     const response = await axiosInstance.get("http://localhost:3010/api/v1/contest/getuser", {
+  //       withCredentials: true
+  //     });
+
+
   return (
     <div className="relative h-screen w-screen bg-black text-white">
       <BrowserRouter>
@@ -30,16 +36,11 @@ const App = () => {
           <Route path="/codearea" element={<CodeArea />} />
           <Route path="/contests" element={<Contests />} />
           <Route path="/createcontest" element={<CreateContest />} />
-          <Route path="/test" element={<Podium players={[
-            { name: 'Alice', score: 120 },
-            { name: 'Bob', score: 110 },
-            { name: 'Charlie', score: 105 },
-          ]} />} />
           <Route path="*" element={<Landing />} />
         </Routes>
       </BrowserRouter>
       <Toaster />
-    </div>
+    </div >
   )
 }
 
