@@ -32,11 +32,11 @@ const CodeArea = () => {
         switch (lang) {
             case 'java':
                 return `class TempCode {
-  // write your code here . . .
+  
 }`;
             case 'cpp':
                 return `class TempCode {
-  // write your code here . . .
+ 
 }`;
             default:
                 return '';
