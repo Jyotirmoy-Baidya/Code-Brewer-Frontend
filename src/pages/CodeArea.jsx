@@ -57,27 +57,33 @@ const CodeArea = () => {
     //     const classNameMatch = code.match(/class\s+(\w+)/);
     //     return classNameMatch ? classNameMatch[1] : null;
     // }
-    function extractClassName(code) {
-        // Regex to match the class that contains the main method
-        // const mainClassMatch = code.match(/class\s+(\w+)\s+.\{[^]?public\s+static\s+void\s+main\s*\(\s*String\s*\[\s*\]\s*args\s*\)\s*\{[^]*?\}/);
-        const mainClassMatch = code.match(/class\s+(\w+)[^{]\{[^{}]\bpublic\s+static\s+void\s+main\s*\(\s*String\s*\[\s*\]\s*args\s*\)[^{]*\{/);
+   function extractClassName(code) {
+        // Regex to match all class definitions
+        const classRegex = /class\s+(\w+)\s*\{[^}]*?\}/g;
     
+        let classMatch;
+        let classNameWithMain = null;
     
-        // If a class with the main method is found, return its name
-        if (mainClassMatch) {
-          return mainClassMatch[1];
+        // Iterate through all classes in the code
+        while ((classMatch = classRegex.exec(code)) !== null) {
+            const className = classMatch[1];
+            const classCode = classMatch[0]; // Full class code including curly braces
+    
+            // Check if this class contains the main method
+            if (/public\s+static\s+void\s+main\s*\(\s*String\s*\[\s*\]\s*args\s*\)\s*\{[^}]*?\}/.test(classCode)) {
+                classNameWithMain = className;
+                break;
+            }
         }
     
-        // Otherwise, return null
-        return null;
+        return classNameWithMain || null;
     }
 
 
     const runCode = () => {
-        // console.log(extractClassName(`${code}`));
 
-        const className = "TestCode";
-        // const className = extractClassName(code);
+
+        const className = "TempCode";
 
         if (className == null) {
             console.log('Error: No class with main method found in your code.');
@@ -92,7 +98,7 @@ const CodeArea = () => {
 
 
         setRunCodeLoading(true)
-        axiosInstance.post('http://localhost:3010/api/v1/compiler/execute', { language, code: codepost, input, className })
+        axiosInstance.post('http://localhost:3010/api/v1/compiler/execute', { language, code: codepost, input,className })
             .then(response => {
                 console.log(response);
                 setOutput(response.data.output);
