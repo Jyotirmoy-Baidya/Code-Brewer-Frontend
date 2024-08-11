@@ -6,15 +6,20 @@ import { IoSearch } from 'react-icons/io5'
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import axiosInstance from '../utils/AxiosInstance'
 import toast from 'react-hot-toast'
+import ShowContestCode from '../components/ShowContestCode'
 
 const CreateContest = () => {
     const [title, setTitle] = useState("");
     const [endTime, setEndTime] = useState('');
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(false);
+    const [createLoading, setCreateLoading] = useState(false);
     const [problemStatementList, setProblemStatementList] = useState([]);
 
     const [selectedProblemStatements, setSelectedProblemStatementList] = useState([]);
+
+    const [code, setCode] = useState("");
+    const [showCodePopUp, setShowCodePopUp] = useState(false);
 
 
     //Fetching all problem statements
@@ -81,8 +86,7 @@ const CreateContest = () => {
         }
 
         const questions = selectedProblemStatements.map(problem => problem._id);
-
-
+        setCreateLoading(true);
         try {
             // Set startTime to the current time
             const startTime = new Date().toISOString();
@@ -95,17 +99,30 @@ const CreateContest = () => {
                 questions
             };
 
-            console.log(requestBody);
 
             // Send POST request to the backend to create the contest
             const response = await axiosInstance.post('http://localhost:3010/api/v1/contest/add', requestBody);
 
-            // Handle the response (e.g., show success message, redirect, etc.)
-            console.log('Contest created successfully:', response.data);
+            setCode(response.data);
+            // Handle the response 
+            toast.success('New Contest Created', {
+                style: {
+                    border: '1px solid #1BF1A1',
+                    padding: '16px',
+                    color: '#1BF1A1',
+                    backgroundColor: '#0D1418'
+                },
+                iconTheme: {
+                    primary: '#1BF1A1',
+                    secondary: '#0D1418',
+                },
+            });
+            setShowCodePopUp(true);
 
         } catch (error) {
-            // Handle any errors (e.g., show error message)
             console.error('Error creating contest:', error);
+        } finally {
+            setCreateLoading(false);
         }
     };
 
@@ -117,7 +134,10 @@ const CreateContest = () => {
                 <div className='flex items-center gap-4'>
                     <NavLink to={`/contests`}><FaArrowCircleLeft className='text-2xl text-primary' /></NavLink>
                     <div className='text-4xl'>Create Contest</div>
-                    <button className='text-lg bg-yellow-400 font-plex-mono px-4 py-2 text-black ms-auto rounded-md' onClick={() => createContest()}>Create Contest</button>
+                    <button className='text-lg bg-yellow-400 font-plex-mono px-4 py-2 text-black ms-auto rounded-md h-12 w-44 flex justify-center items-center' onClick={() => createContest()}>
+                        {createLoading ? <AiOutlineLoading3Quarters className='text-lg loading-spin' /> :
+                            "Create Contest"}
+                    </button>
                 </div>
 
                 <hr />
@@ -189,7 +209,8 @@ const CreateContest = () => {
                 </div>
 
 
-            </div >
+            </div>
+            {showCodePopUp && <ShowContestCode code={code} setShowCodePopUp={setShowCodePopUp} />}
         </>
     )
 }

@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 import Header from '../components/basic/Header'
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { FaArrowCircleLeft, FaEdit } from 'react-icons/fa';
 import { ImBin2 } from 'react-icons/im';
 import axiosInstance from '../utils/AxiosInstance';
+import toast from 'react-hot-toast';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 const CreateProblem = () => {
+    //Defining States
     const [title, setTitle] = useState("");
     const [difficulty, setDifficulty] = useState("");
     const [statement, setStatement] = useState("");
@@ -13,6 +16,10 @@ const CreateProblem = () => {
     const [testCases, setTestCases] = useState([{ input: "", output: "" }])
     const [editTestcase, setEditTestcase] = useState(0);
     const [author, setAuthor] = useState("Jyoti");
+
+    const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate();
 
     //Add new testcase
     const addTestCases = () => {
@@ -49,43 +56,53 @@ const CreateProblem = () => {
     //Saving the problem to the database
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log("check");
         // Validation: Check if any field is empty
-        if (
-            !title.trim() ||
-            !difficulty.trim() ||
-            !statement.trim() ||
-            !constraints.trim() ||
-            testCases.some(tc => !tc.input.trim() || !tc.output.trim()) ||
-            !author.trim()
-        ) {
-            alert('Please fill in all fields.');
-            return;
-        }
-
-        try {
-            console.log({
-                title,
-                description: statement,  // Assuming description corresponds to statement
-                difficulty,
-                constraints,
-                testCases,
-                author,
+        if (!title.trim() || !difficulty.trim() || !statement.trim() || !constraints.trim() || testCases.some(tc => !tc.input.trim() || !tc.output.trim()) || !author.trim()) {
+            toast.error('Please fill all the fields.', {
+                style: {
+                    border: '1px solid red',
+                    padding: '16px',
+                    color: 'red',
+                    backgroundColor: '#0D1418'
+                },
+                iconTheme: {
+                    primary: 'red',
+                    secondary: '#0D1418',
+                },
             });
+            return null;
+        }
+        console.log("ss")
+        setLoading(true);
+        try {
             const response = await axiosInstance.post('http://localhost:3010/api/v1/question/add', {
                 title,
-                description: statement,  // Assuming description corresponds to statement
+                description: statement,
                 difficulty,
                 constraints,
                 testCases,
                 author,
             });
-            console.log(response);
-            alert('Question added successfully!');
-            // Optionally clear form fields or handle success
+
+            toast.success('Question added successfully!', {
+                style: {
+                    border: '1px solid #1BF1A1',
+                    padding: '16px',
+                    color: '#1BF1A1',
+                    backgroundColor: '#0D1418'
+                },
+                iconTheme: {
+                    primary: '#1BF1A1',
+                    secondary: '#0D1418',
+                },
+            });
+            navigate("/problemstatements")
+
         } catch (error) {
             console.error('Error adding question:', error);
             alert('Failed to add question.');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -97,7 +114,12 @@ const CreateProblem = () => {
                 <div className='flex items-center gap-4'>
                     <NavLink to={`/problemstatements`}><FaArrowCircleLeft className='text-2xl text-primary' /></NavLink>
                     <div className='text-4xl'>Create Problem</div>
-                    <button className='text-lg bg-yellow-400 font-plex-mono px-4 py-2 text-black ms-auto rounded-md' onClick={(e) => handleSubmit(e)}>Create Problem</button>
+                    <button className='text-lg w-44 flex justify-center items-center h-12 bg-yellow-400 font-plex-mono px-4 py-2 text-black ms-auto rounded-md' onClick={(e) => handleSubmit(e)}>
+                        {
+                            loading ? <AiOutlineLoading3Quarters className='text-lg loading-spin' /> :
+                                "Create Problem"
+                        }
+                    </button>
                 </div>
 
                 {/* Title and difficulty  */}

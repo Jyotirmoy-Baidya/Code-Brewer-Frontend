@@ -16,7 +16,7 @@ const Header = () => {
                 <NavLink to="/aboutus" className={`${location.pathname === '/aboutus' && "text-primary"}`}>About us</NavLink>
             </div>
             <div className='flex justify-end w-[20%]'>
-                <button onClick={() => navigate("/codearea")} className='min-h-12 bg-primary text-black rounded-md px-4 font-plex-mono hover:scale-[102%] active:scale-[100%]'>Start Code</button>
+                <button onClick={() => navigate("/codearea")} className='min-h-12 bg-primary text-black rounded-md px-4 font-plex-mono'>Start Code</button>
             </div>
         </div>
 

@@ -4,8 +4,10 @@ import EnterUsernamePopUp from '../components/EnterUsernamePopUp'
 import toast from 'react-hot-toast';
 
 const Landing = () => {
+    //Defining States
     const [usernamePopUp, setUsernamePopUp] = useState(false);
     const [contestCode, setContestCode] = useState("");
+
     return (
         <>
             <Header />
@@ -21,7 +23,7 @@ const Landing = () => {
                         <input type="" className='bg-transparent border-2 border-primary w-1/2 h-full py-1 px-4 text-2xl font-semibold text-primary font-plex-mono uppercase tracking-widest rounded-md outline-none' placeholder='Code' onChange={(e) => setContestCode(e.target.value)} />
                         <button className='h-14  bg-primary w-36 rounded-md font-plex-mono text-black mt-auto ' onClick={() => {
                             if (contestCode == "") {
-                                toast.success('Please fill the contest code.', {
+                                toast.error('Please fill the contest code.', {
                                     style: {
                                         border: '1px solid #1BF1A1',
                                         padding: '16px',

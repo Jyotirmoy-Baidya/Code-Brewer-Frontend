@@ -95,19 +95,28 @@ const ProblemStatements = () => {
                 <hr />
                 <div className="p-2 grow grid grid-cols-2 gap-10 overflow-scroll hide-scrollbar contest-list">
                     {
-                        loading === true ? <div className='flex text-xl gap-4 items-center'>Fetching questions<AiOutlineLoading3Quarters className='text-lg loading-spin' /></div> :
-                            problemStatementList.map((problem, i) => {
-                                if (problem.title.toUpperCase().includes(search.toUpperCase()))
-                                    return (
-                                        <NavLink to={`/problem/${problem._id}`} key={i} className=' border-l border-r border-primary h-24 rounded-lg flex items-center justify-between px-4 py-4 shadow shadow-primary active:shadow-none'>
-                                            <div className=' flex flex-col gap-2'>
-                                                <div className='text-lg font-bold tracking-wider uppercase'>{problem.title}</div>
-                                                <div className={`text-xs ${problem.difficulty == 'Easy' ? 'text-primary' : problem.difficulty == 'Medium' ? 'text-blue-400' : 'text-red-400'} flex`}>{problem.difficulty}</div>
-                                            </div>
-                                            <FaArrowCircleRight className='text-3xl text-primary' />
-                                        </NavLink>
-                                    )
-                            })
+                        loading === true ?
+                            <div className='flex text-xl gap-4 items-center'>
+                                Fetching problems... <AiOutlineLoading3Quarters className='text-lg loading-spin' />
+                            </div>
+                            :
+                            !problemStatementList.length > 0 ?
+                                <div className='flex text-xl gap-4 items-center'>
+                                    Due to server issue unable fetch the problem statements.
+                                </div> :
+
+                                problemStatementList.map((problem, i) => {
+                                    if (problem.title.toUpperCase().includes(search.toUpperCase()))
+                                        return (
+                                            <NavLink to={`/problem/${problem._id}`} key={i} className=' border-l border-r border-primary h-24 rounded-lg flex items-center justify-between px-4 py-4 shadow shadow-primary active:shadow-none'>
+                                                <div className=' flex flex-col gap-2'>
+                                                    <div className='text-lg font-bold tracking-wider uppercase'>{problem.title}</div>
+                                                    <div className={`text-xs ${problem.difficulty == 'Easy' ? 'text-primary' : problem.difficulty == 'Medium' ? 'text-blue-400' : 'text-red-400'} flex`}>{problem.difficulty}</div>
+                                                </div>
+                                                <FaArrowCircleRight className='text-3xl text-primary' />
+                                            </NavLink>
+                                        )
+                                })
                     }
                 </div>
             </div>

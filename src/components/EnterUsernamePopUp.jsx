@@ -6,20 +6,22 @@ import toast from 'react-hot-toast';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 const EnterUsernamePopUp = ({ setUsernamePopUp, contestCode }) => {
-    const [username, setUsername] = useState("");
     const navigate = useNavigate();
+
+    //Defining States
+    const [username, setUsername] = useState("");
     const [loading, setLoading] = useState(false);
 
-
+    //User Joining contest using username
     const joinContest = async () => {
         if (!username) {
             console.error('Username is required.');
             return; // Exit the function if validation fails
         }
+
         setLoading(true);
         try {
-
-            // Construct the request body
+            // Constructing the request body
             const requestBody = {
                 contestCode,
                 userName: username,
@@ -30,21 +32,44 @@ const EnterUsernamePopUp = ({ setUsernamePopUp, contestCode }) => {
                 withCredentials: true //To ensure cookies are sent with request
             });
 
-            // Handle the response (e.g., show success message, return response, etc.)
-            console.log('Joined contest successfully:', response.data);
+            toast.success('Successfully joined the contest', {
+                style: {
+                    border: '1px solid #1BF1A1',
+                    padding: '16px',
+                    color: '#1BF1A1',
+                    backgroundColor: '#0D1418'
+                },
+                iconTheme: {
+                    primary: '#1BF1A1',
+                    secondary: '#0D1418',
+                },
+            });
 
             navigate(`/contestactive/${contestCode}`)
             // Return the response data
             return response.data;
         } catch (error) {
             if (error.response.data.message == 'Contest not found') {
-                toast.error("Invalid Contest Code");
+                toast.error('Invalid contest code.', {
+                    style: {
+                        border: '1px solid red',
+                        padding: '16px',
+                        color: 'red',
+                        backgroundColor: '#0D1418'
+                    },
+                    iconTheme: {
+                        primary: 'red',
+                        secondary: '#0D1418',
+                    },
+                });
                 return null;
             }
             // Handle any errors (e.g., show error message)
             console.error('Error joining contest:', error);
             return null;
         } finally {
+            setUsernamePopUp(false);
+            setUsername("");
             setLoading(false);
         }
     };
