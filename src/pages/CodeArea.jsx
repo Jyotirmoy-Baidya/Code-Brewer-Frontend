@@ -15,6 +15,7 @@ import axiosInstance from '../utils/AxiosInstance';
 
 import { autocompletion, completeFromList } from '@codemirror/autocomplete';
 import { closeBrackets } from '@codemirror/autocomplete';
+import NavigateToContest from '../components/NavigateToContest';
 
 
 
@@ -57,25 +58,25 @@ const CodeArea = () => {
     //     const classNameMatch = code.match(/class\s+(\w+)/);
     //     return classNameMatch ? classNameMatch[1] : null;
     // }
-   function extractClassName(code) {
+    function extractClassName(code) {
         // Regex to match all class definitions
         const classRegex = /class\s+(\w+)\s*\{[^}]*?\}/g;
-    
+
         let classMatch;
         let classNameWithMain = null;
-    
+
         // Iterate through all classes in the code
         while ((classMatch = classRegex.exec(code)) !== null) {
             const className = classMatch[1];
             const classCode = classMatch[0]; // Full class code including curly braces
-    
+
             // Check if this class contains the main method
             if (/public\s+static\s+void\s+main\s*\(\s*String\s*\[\s*\]\s*args\s*\)\s*\{[^}]*?\}/.test(classCode)) {
                 classNameWithMain = className;
                 break;
             }
         }
-    
+
         return classNameWithMain || null;
     }
 
@@ -98,7 +99,7 @@ const CodeArea = () => {
 
 
         setRunCodeLoading(true)
-        axiosInstance.post('http://localhost:3010/api/v1/compiler/execute', { language, code: codepost, input,className })
+        axiosInstance.post('http://localhost:3010/api/v1/compiler/execute', { language, code: codepost, input, className })
             .then(response => {
                 console.log(response);
                 setOutput(response.data.output);
@@ -217,6 +218,7 @@ const CodeArea = () => {
 
     return (
         <>
+            <NavigateToContest />
             <Header />
             <div className="max-h-[84%] h-[84%] flex gap-4 text-white px-16 pt-3 pb-3">
                 <div className='w-1/2 flex flex-col gap-4'>

@@ -6,6 +6,7 @@ import { ImBin2 } from 'react-icons/im';
 import axiosInstance from '../utils/AxiosInstance';
 import toast from 'react-hot-toast';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import NavigateToContest from '../components/NavigateToContest';
 
 const CreateProblem = () => {
     //Defining States
@@ -108,6 +109,7 @@ const CreateProblem = () => {
 
     return (
         <>
+            <NavigateToContest />
             <Header />
             <div className="max-h-[84%] font-helvetica flex flex-col gap-4 text-white px-16 pt-7 pb-3">
 

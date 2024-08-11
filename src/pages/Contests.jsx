@@ -7,14 +7,8 @@ import { NavLink } from "react-router-dom";
 import axiosInstance from "../utils/AxiosInstance";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import EnterUsernamePopUp from "../components/EnterUsernamePopUp";
+import NavigateToContest from "../components/NavigateToContest";
 
-const contests1 = [
-    { name: "Contest A", code: "WEQXY5I" },
-    { name: "Contest B", code: "HD2LK8P" },
-    { name: "Contest C", code: "MNO9J3Q" },
-    { name: "Contest D", code: "R7VBU4K" },
-    { name: "Contest E", code: "ZXT12GH" }
-];
 
 const Contests = () => {
     const [search, setSearch] = useState("");
@@ -50,6 +44,7 @@ const Contests = () => {
 
     return (
         <>
+            <NavigateToContest />
             <Header />
             <div className="max-h-[84%] flex flex-col gap-4 text-white px-16 pt-7 pb-3">
                 {/* <div className="text-3xl tracking-wider font-semibold font-helvetica">Contests</div> */}
@@ -66,14 +61,18 @@ const Contests = () => {
                 <div className="p-2 grow grid grid-cols-2 gap-10 overflow-scroll hide-scrollbar contest-list">
                     {
                         loading === true ? <div className='flex text-xl gap-4 items-center'>Fetching Contests<AiOutlineLoading3Quarters className='text-lg loading-spin' /></div> :
-                            <>{
-                                contests.map((ele, i) => {
-                                    if (ele.title.toUpperCase().includes(search.toUpperCase()))
-                                        return (
-                                            <ContestBlock key={i} contest={ele} setContestCode={setContestCode} setUsernamePopUp={setUsernamePopUp} />
-                                        )
-                                })
-                            }</>
+                            !contests.length > 0 ?
+                                <div className='flex text-xl gap-4 items-center'>
+                                    Due to server issue unable fetch the contests.
+                                </div> :
+                                <>{
+                                    contests.map((ele, i) => {
+                                        if (ele.title.toUpperCase().includes(search.toUpperCase()))
+                                            return (
+                                                <ContestBlock key={i} contest={ele} setContestCode={setContestCode} setUsernamePopUp={setUsernamePopUp} />
+                                            )
+                                    })
+                                }</>
                     }
                 </div>
             </div >

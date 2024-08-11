@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Header from '../components/basic/Header'
 import EnterUsernamePopUp from '../components/EnterUsernamePopUp'
 import toast from 'react-hot-toast';
+import NavigateToContest from '../components/NavigateToContest';
 
 const Landing = () => {
     //Defining States
@@ -10,6 +11,7 @@ const Landing = () => {
 
     return (
         <>
+            <NavigateToContest />
             <Header />
             <div className='h-[84%] grid grid-cols-2 text-white gap-4 px-16 pt-7 pb-16'>
                 <div className='flex flex-col gap-4 h-full'>

@@ -6,34 +6,7 @@ import { FaArrowCircleRight } from 'react-icons/fa';
 import axios from 'axios';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import axiosInstance from '../utils/AxiosInstance';
-
-const problemstatements = [
-    {
-        name: "Maximum Sum",
-        difficulty: "Medium",
-        problemId: 101
-    },
-    {
-        name: "Binary Tree Inorder Traversal",
-        difficulty: "Easy",
-        problemId: 102
-    },
-    {
-        name: "Longest Substring Without Repeating Characters",
-        difficulty: "Hard",
-        problemId: 103
-    },
-    {
-        name: "Merge Two Sorted Lists",
-        difficulty: "Easy",
-        problemId: 104
-    },
-    {
-        name: "Kth Largest Element in an Array",
-        difficulty: "Medium",
-        problemId: 105
-    }
-];
+import NavigateToContest from '../components/NavigateToContest';
 
 
 const ProblemStatements = () => {
@@ -41,6 +14,8 @@ const ProblemStatements = () => {
     const [loading, setLoading] = useState(false);
 
     const [problemStatementList, setProblemStatementList] = useState([]);
+
+    //Fetching all elements
     const fetchAllQuestions = async () => {
         try {
             // Show loading indicator if necessary
@@ -81,6 +56,7 @@ const ProblemStatements = () => {
 
     return (
         <>
+            <NavigateToContest />
             <Header />
             <div className="max-h-[84%] flex flex-col gap-4 text-white px-16 pt-7 pb-3">
                 <div className='flex gap-4 justify-center'>

@@ -7,6 +7,7 @@ import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import axiosInstance from '../utils/AxiosInstance'
 import toast from 'react-hot-toast'
 import ShowContestCode from '../components/ShowContestCode'
+import NavigateToContest from '../components/NavigateToContest'
 
 const CreateContest = () => {
     const [title, setTitle] = useState("");
@@ -129,6 +130,7 @@ const CreateContest = () => {
 
     return (
         <>
+            <NavigateToContest />
             <Header />
             <div className="max-h-[84%] font-helvetica flex flex-col gap-4 text-white px-16 pt-7 pb-3">
                 <div className='flex items-center gap-4'>
@@ -188,20 +190,24 @@ const CreateContest = () => {
                             {
                                 loading === true ?
                                     <div className='flex text-xl gap-4 items-center'>Fetching questions<AiOutlineLoading3Quarters className='text-lg loading-spin' /></div> :
-                                    problemStatementList
-                                        .filter(problem => !selectedProblemStatements.includes(problem))
-                                        .map((problem, i) => {
-                                            if (problem.title.toUpperCase().includes(search.toUpperCase()))
-                                                return (
-                                                    <div key={i} className=' border-l border-r border-blue-400 h-24 rounded-lg flex items-center justify-between px-4 py-4 shadow shadow-blue-400 active:shadow-none bg-primary-black'>
-                                                        <div className=' flex flex-col gap-2'>
-                                                            <div className='text-lg font-bold tracking-wider uppercase'>{problem.title}</div>
-                                                            <div className={`text-xs ${problem.difficulty == 'Easy' ? 'text-primary' : problem.difficulty == 'Medium' ? 'text-blue-400' : 'text-red-400'} flex`}>{problem.difficulty}</div>
+                                    !problemStatementList.length > 0 ?
+                                        <div className='flex text-xl gap-4 items-center'>
+                                            Due to server issue unable fetch the problem statements.
+                                        </div> :
+                                        problemStatementList
+                                            .filter(problem => !selectedProblemStatements.includes(problem))
+                                            .map((problem, i) => {
+                                                if (problem.title.toUpperCase().includes(search.toUpperCase()))
+                                                    return (
+                                                        <div key={i} className=' border-l border-r border-blue-400 h-24 rounded-lg flex items-center justify-between px-4 py-4 shadow shadow-blue-400 active:shadow-none bg-primary-black'>
+                                                            <div className=' flex flex-col gap-2'>
+                                                                <div className='text-lg font-bold tracking-wider uppercase'>{problem.title}</div>
+                                                                <div className={`text-xs ${problem.difficulty == 'Easy' ? 'text-primary' : problem.difficulty == 'Medium' ? 'text-blue-400' : 'text-red-400'} flex`}>{problem.difficulty}</div>
+                                                            </div>
+                                                            <div className='border py-2 px-3 rounded-md bg-blue-50 bg-opacity-10 tracking-wider font-plex-mono text-blue-400 cursor-pointer' onClick={() => selectProblemForContest(problem)} >Select</div>
                                                         </div>
-                                                        <div className='border py-2 px-3 rounded-md bg-blue-50 bg-opacity-10 tracking-wider font-plex-mono text-blue-400 cursor-pointer' onClick={() => selectProblemForContest(problem)} >Select</div>
-                                                    </div>
-                                                )
-                                        })
+                                                    )
+                                            })
                             }
                         </div>
                     </div>
