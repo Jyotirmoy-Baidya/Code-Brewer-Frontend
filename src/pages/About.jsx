@@ -1,8 +1,10 @@
 import React from 'react';
-
+import Header from '../components/basic/Header';
 const About = () => {
   return (
-    <section className="bg-black py-16 px-8 text-white">
+    <>
+    <Header />
+    <section className="bg-black py-10 px-8 text-white">
       <div className="container mx-auto">
         <h2 className="text-3xl font-extrabold mb-6 text-center text-[#1BF1A1] tracking-wide font-helvetica">About Our Platform</h2>
         <p className="text-base leading-relaxed mb-10 text-center max-w-3xl mx-auto">
@@ -51,6 +53,7 @@ const About = () => {
         </div>
       </div>
     </section>
+    </>
   );
 };
 
