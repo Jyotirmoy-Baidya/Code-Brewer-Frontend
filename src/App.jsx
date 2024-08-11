@@ -15,6 +15,7 @@ import Podium from "./components/podium/Podium"
 import CreateContest from "./pages/CreateContest"
 import axiosInstance from "./utils/AxiosInstance"
 import Redirect from "./components/basic/Redirect"
+import About from "./pages/About"
 
 const App = () => {
   //   try {
@@ -36,6 +37,7 @@ const App = () => {
           <Route path="/codearea" element={<CodeArea />} />
           <Route path="/contests" element={<Contests />} />
           <Route path="/createcontest" element={<CreateContest />} />
+          <Route path="/aboutus" element={<About/>} />
           <Route path="*" element={<Landing />} />
         </Routes>
       </BrowserRouter>
