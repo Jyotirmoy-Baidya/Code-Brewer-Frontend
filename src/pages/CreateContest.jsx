@@ -8,6 +8,7 @@ import axiosInstance from '../utils/AxiosInstance'
 import toast from 'react-hot-toast'
 import ShowContestCode from '../components/ShowContestCode'
 import NavigateToContest from '../components/NavigateToContest'
+import axiosHandler from '../utils/AxiosInstance'
 
 const CreateContest = () => {
     const [title, setTitle] = useState("");
@@ -23,39 +24,18 @@ const CreateContest = () => {
     const [showCodePopUp, setShowCodePopUp] = useState(false);
 
 
-    //Fetching all problem statements
+    //Fetching all elements
     const fetchAllQuestions = async () => {
-        try {
-            // Show loading indicator if necessary
-            console.log('Fetching questions...');
-            setLoading(true);
-
-            const response = await axiosInstance.get('http://localhost:3010/api/v1/question/all');
-            console.log(response);
-
-            // Handle success
-            if (response.status === 200) {
-                console.log('Questions fetched successfully:', response.data);
-                setProblemStatementList(response.data); // Return the data for further use
-            } else {
-                console.error('Unexpected response code:', response.status);
-                return null;
-            }
-        } catch (error) {
-            // Handle error
-            if (error.response) {
-                console.error('Server responded with an error:', error.response.data);
-            } else if (error.request) {
-                console.error('Request made, but no response received:', error.request);
-            } else {
-                console.error('Error in setting up the request:', error.message);
-            }
-            return null; // Return null to signify the failure
-        } finally {
-            // Hide loading indicator if necessary
-            setLoading(false);
-            console.log('Fetching complete.');
+        setLoading(true);
+        const response = await axiosHandler('get', 'question/all');
+        console.log(response);
+        if (response.success == true) {
+            setProblemStatementList(response.questions);
         }
+        else {
+            console.error('Error:', response.message);
+        }
+        setLoading(false);
     };
 
     useEffect(() => {
@@ -88,23 +68,23 @@ const CreateContest = () => {
 
         const questions = selectedProblemStatements.map(problem => problem._id);
         setCreateLoading(true);
-        try {
-            // Set startTime to the current time
-            const startTime = new Date().toISOString();
+        // Set startTime to the current time
+        const startTime = new Date().toISOString();
 
-            // Construct the request body
-            const requestBody = {
-                title,
-                startTime,
-                endTime,
-                questions
-            };
+        // Construct the request body
+        const requestBody = {
+            title,
+            startTime,
+            endTime,
+            questions
+        };
 
 
-            // Send POST request to the backend to create the contest
-            const response = await axiosInstance.post('http://localhost:3010/api/v1/contest/add', requestBody);
+        // Send POST request to the backend to create the contest
+        const response = await axiosHandler('post', 'contest/add', requestBody);
 
-            setCode(response.data);
+        if (response.success == true) {
+            setCode(response.code);
             // Handle the response 
             toast.success('New Contest Created', {
                 style: {
@@ -119,12 +99,22 @@ const CreateContest = () => {
                 },
             });
             setShowCodePopUp(true);
-
-        } catch (error) {
-            console.error('Error creating contest:', error);
-        } finally {
-            setCreateLoading(false);
         }
+        else {
+            toast.error('Failed to create a contest', {
+                style: {
+                    border: '1px solid red',
+                    padding: '16px',
+                    color: 'red',
+                    backgroundColor: '#0D1418'
+                },
+                iconTheme: {
+                    primary: 'red',
+                    secondary: '#0D1418',
+                },
+            });
+        }
+        setCreateLoading(false);
     };
 
 

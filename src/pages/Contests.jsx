@@ -4,38 +4,30 @@ import { IoSearch } from "react-icons/io5";
 
 import ContestBlock from "../components/ContestBlock";
 import { NavLink } from "react-router-dom";
-import axiosInstance from "../utils/AxiosInstance";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import EnterUsernamePopUp from "../components/EnterUsernamePopUp";
 import NavigateToContest from "../components/NavigateToContest";
+import axiosHandler from "../utils/AxiosInstance";
 
 
 const Contests = () => {
     const [search, setSearch] = useState("");
     const [contests, setContests] = useState([]);
     const [loading, setLoading] = useState(false);
-
     const [usernamePopUp, setUsernamePopUp] = useState(false);
     const [contestCode, setContestCode] = useState("");
 
-
     const fetchAllContests = async () => {
         setLoading(true);
-        try {
-            // Send GET request to the backend to fetch all contests
-            const response = await axiosInstance.get('http://localhost:3010/api/v1/contest/all');
-
-            // Handle the response (e.g., store the data in state, log it, etc.)
-            console.log('Contests fetched successfully:', response.data);
-
-            // Return the contests data
-            setContests(response.data);
-        } catch (error) {
-            // Handle any errors (e.g., show error message)
-            console.error('Error fetching contests:', error);
-        } finally {
-            setLoading(false);
+        const response = await axiosHandler('get', 'contest/all');
+        if (response.success == true) {
+            console.log('Contests fetched successfully:', response.contests);
+            setContests(response.contests);
         }
+        else {
+            console.error('Error fetching contests:', response.message);
+        }
+        setLoading(false);
     };
 
     useEffect(() => {

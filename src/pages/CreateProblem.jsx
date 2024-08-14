@@ -7,6 +7,7 @@ import axiosInstance from '../utils/AxiosInstance';
 import toast from 'react-hot-toast';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import NavigateToContest from '../components/NavigateToContest';
+import axiosHandler from '../utils/AxiosInstance';
 
 const CreateProblem = () => {
     //Defining States
@@ -73,18 +74,18 @@ const CreateProblem = () => {
             });
             return null;
         }
-        console.log("ss")
-        setLoading(true);
-        try {
-            const response = await axiosInstance.post('http://localhost:3010/api/v1/question/add', {
-                title,
-                description: statement,
-                difficulty,
-                constraints,
-                testCases,
-                author,
-            });
 
+
+        setLoading(true);
+        const response = await axiosHandler('post', 'http://localhost:3010/api/v1/question/add', {
+            title,
+            description: statement,
+            difficulty,
+            constraints,
+            testCases,
+            author,
+        });
+        if (response.success == true) {
             toast.success('Question added successfully!', {
                 style: {
                     border: '1px solid #1BF1A1',
@@ -98,12 +99,20 @@ const CreateProblem = () => {
                 },
             });
             navigate("/problemstatements")
-
-        } catch (error) {
-            console.error('Error adding question:', error);
-            alert('Failed to add question.');
-        } finally {
-            setLoading(false);
+        }
+        else {
+            toast.error('Failed to create the problem', {
+                style: {
+                    border: '1px solid red',
+                    padding: '16px',
+                    color: 'red',
+                    backgroundColor: '#0D1418'
+                },
+                iconTheme: {
+                    primary: 'red',
+                    secondary: '#0D1418',
+                },
+            });
         }
     };
 

@@ -1,20 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axiosInstance from '../../utils/AxiosInstance'
 import toast from 'react-hot-toast'
+import axiosHandler from '../../utils/AxiosInstance'
 
 const ActiveContestHeader = ({ endTime }) => {
 
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false);
 
     //finish the contest
     const finishContest = async () => {
-        try {
-            const response = await axiosInstance.get(`http://localhost:3010/api/v1/contest/submitcontest`, {
-                withCredentials: true
-            });
-            console.log('Contest finished successfully:', response.data);
-            toast.success('Contest finished succesfully', {
+        setLoading(true);
+        const response = await axiosHandler('get', 'contest/submitcontest',)
+
+        if (response.success == true) {
+            toast.success('Contest finished successfully', {
                 style: {
                     border: '1px solid #1BF1A1',
                     padding: '16px',
@@ -27,9 +28,22 @@ const ActiveContestHeader = ({ endTime }) => {
                 },
             });
             navigate('/');
-        } catch (error) {
-            console.error('Error finishing contest:', error);
         }
+        else {
+            toast.error('Error finishing contest', {
+                style: {
+                    border: '1px solid red',
+                    padding: '16px',
+                    color: 'red',
+                    backgroundColor: '#0D1418'
+                },
+                iconTheme: {
+                    primary: 'red',
+                    secondary: '#0D1418',
+                },
+            });
+        }
+        setLoading(false);
     }
 
     return (

@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom'
 import axiosInstance from '../utils/AxiosInstance';
 import toast from 'react-hot-toast';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import axiosHandler from '../utils/AxiosInstance';
 
 const EnterUsernamePopUp = ({ setUsernamePopUp, contestCode }) => {
     const navigate = useNavigate();
-
     //Defining States
     const [username, setUsername] = useState("");
     const [loading, setLoading] = useState(false);
@@ -20,18 +20,14 @@ const EnterUsernamePopUp = ({ setUsernamePopUp, contestCode }) => {
         }
 
         setLoading(true);
-        try {
-            // Constructing the request body
-            const requestBody = {
-                contestCode,
-                userName: username,
-            };
-
-            // Send POST request to join the contest
-            const response = await axiosInstance.post('http://localhost:3010/api/v1/contest/join', requestBody, {
-                withCredentials: true //To ensure cookies are sent with request
-            });
-
+        // Send POST request to join the contest
+        const response = await axiosHandler('post', 'contest/join', {
+            contestCode,
+            userName: username,
+        }, {
+            withCredentials: true,
+        });
+        if (response.success === true) {
             toast.success('Successfully joined the contest', {
                 style: {
                     border: '1px solid #1BF1A1',
@@ -44,12 +40,10 @@ const EnterUsernamePopUp = ({ setUsernamePopUp, contestCode }) => {
                     secondary: '#0D1418',
                 },
             });
-
-            navigate(`/contestactive/${contestCode}`)
-            // Return the response data
-            return response.data;
-        } catch (error) {
-            if (error.response.data.message == 'Contest not found') {
+            navigate(`/contestactive/${contestCode}`);
+        }
+        else {
+            if (response.message == 'Contest not found') {
                 toast.error('Invalid contest code.', {
                     style: {
                         border: '1px solid red',
@@ -62,16 +56,13 @@ const EnterUsernamePopUp = ({ setUsernamePopUp, contestCode }) => {
                         secondary: '#0D1418',
                     },
                 });
-                return null;
             }
-            // Handle any errors (e.g., show error message)
-            console.error('Error joining contest:', error);
-            return null;
-        } finally {
-            setUsernamePopUp(false);
-            setUsername("");
-            setLoading(false);
+            console.warn('Error joining contest:', response.message);
         }
+
+        setUsernamePopUp(false);
+        setUsername("");
+        setLoading(false);
     };
 
 

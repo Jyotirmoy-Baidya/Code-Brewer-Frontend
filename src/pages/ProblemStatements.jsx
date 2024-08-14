@@ -7,6 +7,7 @@ import axios from 'axios';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import axiosInstance from '../utils/AxiosInstance';
 import NavigateToContest from '../components/NavigateToContest';
+import axiosHandler from '../utils/AxiosInstance';
 
 
 const ProblemStatements = () => {
@@ -17,36 +18,17 @@ const ProblemStatements = () => {
 
     //Fetching all elements
     const fetchAllQuestions = async () => {
-        try {
-            // Show loading indicator if necessary
-            console.log('Fetching questions...');
-            setLoading(true);
-
-            const response = await axiosInstance.get('http://localhost:3010/api/v1/question/all');
-
-            // Handle success
-            if (response.status === 200) {
-                console.log('Questions fetched successfully:', response.data);
-                setProblemStatementList(response.data); // Return the data for further use
-            } else {
-                console.error('Unexpected response code:', response.status);
-                return null;
-            }
-        } catch (error) {
-            // Handle error
-            if (error.response) {
-                console.error('Server responded with an error:', error.response.data);
-            } else if (error.request) {
-                console.error('Request made, but no response received:', error.request);
-            } else {
-                console.error('Error in setting up the request:', error.message);
-            }
-            return null; // Return null to signify the failure
-        } finally {
-            // Hide loading indicator if necessary
-            setLoading(false);
-            console.log('Fetching complete.');
+        setLoading(true);
+        const response = await axiosHandler('get', 'question/all');
+        console.log(response);
+        if (response.success == true) {
+            console.log('Questions fetched successfully:', response.data);
+            setProblemStatementList(response.questions);
         }
+        else {
+            console.error('Error:', response.message);
+        }
+        setLoading(false);
     };
 
     useEffect(() => {

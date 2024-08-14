@@ -1,5 +1,3 @@
-import { NavLink } from "react-router-dom";
-
 const ContestBlock = ({ contest, setContestCode, setUsernamePopUp }) => {
     return (
         <div className="h-20 bg-primary-black flex items-center justify-between rounded-md px-4 py-4   shadow-primary">

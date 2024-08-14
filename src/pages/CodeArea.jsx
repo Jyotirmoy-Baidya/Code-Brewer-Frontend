@@ -16,6 +16,7 @@ import axiosInstance from '../utils/AxiosInstance';
 import { autocompletion, completeFromList } from '@codemirror/autocomplete';
 import { closeBrackets } from '@codemirror/autocomplete';
 import NavigateToContest from '../components/NavigateToContest';
+import axiosHandler from '../utils/AxiosInstance';
 
 
 
@@ -81,7 +82,7 @@ const CodeArea = () => {
     }
 
 
-    const runCode = () => {
+    const runCode = async () => {
 
 
         const className = "TempCode";
@@ -99,22 +100,46 @@ const CodeArea = () => {
 
 
         setRunCodeLoading(true)
-        axiosInstance.post('http://localhost:3010/api/v1/compiler/execute', { language, code: codepost, input, className })
-            .then(response => {
-                console.log(response);
-                setOutput(response.data.output);
-                setMetrics({
-                    time: response.data.executionTime,
-                    memory: response.data.memoryUsed
-                });
-                toast.success("Output Came");
-            })
-            .catch(error => {
-                setOutput('Error:  ' + error);
-                setMetrics({ time: '', memory: '' });
-                toast.error("Error Occured");
-            }).finally(() => setRunCodeLoading(false));
-    };
+        const response = await axiosHandler('post', 'compiler/execute', { language, code: codepost, input, className })
+        if (response.success == true) {
+            setOutput(response.output);
+            setMetrics({
+                time: response.executionTime,
+                memory: response.memoryUsed
+            });
+            toast.success('Output Came', {
+                style: {
+                    border: '1px solid #1BF1A1',
+                    padding: '16px',
+                    color: '#1BF1A1',
+                    backgroundColor: '#0D1418'
+                },
+                iconTheme: {
+                    primary: '#1BF1A1',
+                    secondary: '#0D1418',
+                },
+            });
+        }
+        else {
+            setOutput('Error: ' + response.message);
+            setMetrics({ time: '', memory: '' });
+            toast.error('Error Occurred', {
+                style: {
+                    border: '1px solid red',
+                    padding: '16px',
+                    color: 'red',
+                    backgroundColor: '#0D1418'
+                },
+                iconTheme: {
+                    primary: 'red',
+                    secondary: '#0D1418',
+                },
+            });
+        }
+        setRunCodeLoading(false);
+    }
+
+
 
 
     function convertJavaToJSString(javaCode) {

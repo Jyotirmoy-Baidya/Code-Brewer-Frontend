@@ -16,6 +16,8 @@ import CustomDropdown from '../components/basic/CustomDropDown';
 import toast from 'react-hot-toast';
 import axiosInstance from '../utils/AxiosInstance';
 import ActiveContestHeader from '../components/basic/ActiveContestHeader';
+import axiosHandler from '../utils/AxiosInstance';
+import { AxiosHeaders } from 'axios';
 
 
 
@@ -94,24 +96,51 @@ const Problem = () => {
 
 
         const codepost = convertJavaToJSString(code);
-        setRunCodeLoading(true)
-        axiosInstance.post(`http://localhost:3010/api/v1/contest/submit/${params.problemid}`, { language, code: codepost, className }, {
-            withCredentials: true // This ensures cookies are sent with the request
-          })
-            .then(response => {
-                console.log(response);
-                setTestCaseResult(response.data);
-                toast.success("Output Came");
-            })
-            .catch(error => {
-                setOutput('Error:  ' + error);
-                setMetrics({ time: '', memory: '' });
-                toast.error("Error Occured");
-            }).finally(() => setRunCodeLoading(false));
+        setRunCodeLoading(true);
+
+        const response = await axiosHandler('POST', `contest/submit/${params.problemid}`, {
+            language,
+            code: codepost,
+            className
+        });
+
+        if (response.success === true) {
+            setTestCaseResult(response.result);
+            toast.success('Output Came', {
+                style: {
+                    border: '1px solid #1BF1A1',
+                    padding: '16px',
+                    color: '#1BF1A1',
+                    backgroundColor: '#0D1418'
+                },
+                iconTheme: {
+                    primary: '#1BF1A1',
+                    secondary: '#0D1418',
+                },
+            });
+        } else {
+            setOutput('Error: ' + response.message);
+            setMetrics({ time: '', memory: '' });
+            toast.error('Error Occurred', {
+                style: {
+                    border: '1px solid red',
+                    padding: '16px',
+                    color: 'red',
+                    backgroundColor: '#0D1418'
+                },
+                iconTheme: {
+                    primary: 'red',
+                    secondary: '#0D1418',
+                },
+            });
+        }
+
+        setRunCodeLoading(false);
+
     }
 
 
-    const runCode = () => {
+    const runCode = async () => {
         // console.log(code);
         // const codepost=`${code}`;
         const codepost = convertJavaToJSString(code);
@@ -121,23 +150,44 @@ const Problem = () => {
             setOutput('Error: No class with main method found in your code.');
             return;
         }
-        console.log(codepost, input);
-        setRunCodeLoading(true)
-        axiosInstance.post('http://localhost:3010/api/v1/compiler/execute', { language, code: codepost, input, className })
-            .then(response => {
-                console.log(response);
-                setOutput(response.data.output);
-                setMetrics({
-                    time: response.data.executionTime,
-                    memory: response.data.memoryUsed
-                });
-                toast.success("Output Came");
-            })
-            .catch(error => {
-                setOutput('Error:  ' + error);
-                setMetrics({ time: '', memory: '' });
-                toast.error("Error Occured");
-            }).finally(() => setRunCodeLoading(false));
+        setRunCodeLoading(true);
+        const response = await axiosHandler('post', 'compiler/execute', { language, code: codepost, input, className });
+        if (response.success === true) {
+            setOutput(response.output);
+            setMetrics({
+                time: response.executionTime,
+                memory: response.memoryUsed
+            });
+            toast.success('Output Came', {
+                style: {
+                    border: '1px solid #1BF1A1',
+                    padding: '16px',
+                    color: '#1BF1A1',
+                    backgroundColor: '#0D1418'
+                },
+                iconTheme: {
+                    primary: '#1BF1A1',
+                    secondary: '#0D1418',
+                },
+            });
+        }
+        else {
+            setOutput('Error: ' + response.message);
+            setMetrics({ time: '', memory: '' });
+            toast.error('Error Occured', {
+                style: {
+                    border: '1px solid red',
+                    padding: '16px',
+                    color: 'red',
+                    backgroundColor: '#0D1418'
+                },
+                iconTheme: {
+                    primary: 'red',
+                    secondary: '#0D1418',
+                },
+            });
+        }
+        setRunCodeLoading(false);
     };
 
     function convertJavaToJSString(javaCode) {
@@ -180,35 +230,14 @@ const Problem = () => {
             return null;
         }
 
-        try {
-            // Show loading indicator if necessary
-            console.log(`Fetching details for question ID: ${id}...`);
-
-            const response = await axiosInstance.get(`http://localhost:3010/api/v1/question/${id}`);
-
-            // Handle success
-            if (response.status === 200) {
-                console.log('Question details fetched successfully:', response.data);
-                setProblem(response.data);
-            } else {
-                console.error('Unexpected response code:', response.status);
-                return null;
-            }
-        } catch (error) {
-            // Handle error
-            if (error.response) {
-                console.error('Server responded with an error:', error.response.data);
-            } else if (error.request) {
-                console.error('Request made, but no response received:', error.request);
-            } else {
-                console.error('Error in setting up the request:', error.message);
-            }
-            return null; // Return null to signify the failure
-        } finally {
-            // Hide loading indicator if necessary
-            setLoading(false);
-            console.log('Fetching complete.');
+        const response = await axiosHandler('get', `question/${id}`);
+        if (response.success == true) {
+            setProblem(response.question);
         }
+        else {
+            console.error('Error: ', response.message);
+        }
+        setLoading(false);
     };
 
 
@@ -230,7 +259,7 @@ const Problem = () => {
                     Object.keys(problem).length === 0 ?
                         <div className="font-helvetica flex text-2xl text-white px-16 pt-4 pb-3">
                             <div className='flex grow-0 items-center gap-4'>
-                                <NavLink to={`/problemstatements`}><FaArrowCircleLeft className='text-2xl text-primary' /></NavLink>
+                                <NavLink to={`/contestactive/${params.code}`}><FaArrowCircleLeft className='text-2xl text-primary' /></NavLink>
                                 Sorry could not load the question
                             </div>
                         </div> :

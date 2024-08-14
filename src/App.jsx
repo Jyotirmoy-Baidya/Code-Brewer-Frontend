@@ -13,8 +13,6 @@ import { useEffect, useState } from "react"
 import EnterUsernamePopUp from "./components/EnterUsernamePopUp"
 import Podium from "./components/podium/Podium"
 import CreateContest from "./pages/CreateContest"
-import axiosInstance from "./utils/AxiosInstance"
-import Redirect from "./components/basic/Redirect"
 import About from "./pages/About"
 
 const App = () => {
@@ -25,7 +23,7 @@ const App = () => {
 
 
   return (
-    <div className="relative h-screen w-screen bg-black text-white">
+    <div className="relative min-h-screen bg-black text-white design-scrollbar">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Landing />} />
@@ -37,7 +35,7 @@ const App = () => {
           <Route path="/codearea" element={<CodeArea />} />
           <Route path="/contests" element={<Contests />} />
           <Route path="/createcontest" element={<CreateContest />} />
-          <Route path="/aboutus" element={<About/>} />
+          <Route path="/aboutus" element={<About />} />
           <Route path="*" element={<Landing />} />
         </Routes>
       </BrowserRouter>
