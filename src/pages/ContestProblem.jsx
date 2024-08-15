@@ -100,7 +100,7 @@ const Problem = () => {
 
         const response = await axiosHandler('POST', `contest/submit/${params.problemid}`, {
             language,
-            code: codepost,
+            code,
             className
         });
 
@@ -151,7 +151,7 @@ const Problem = () => {
             return;
         }
         setRunCodeLoading(true);
-        const response = await axiosHandler('post', 'compiler/execute', { language, code: codepost, input, className });
+        const response = await axiosHandler('post', 'compiler/execute', { language, code, input, className });
         if (response.success === true) {
             setOutput(response.output);
             setMetrics({

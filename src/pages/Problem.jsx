@@ -97,7 +97,7 @@ const Problem = () => {
 
         const codepost = convertJavaToJSString(code);
         setRunCodeLoading(true)
-        const response = await axiosHandler('post', `question/run/${id}`, { language, code: codepost, className });
+        const response = await axiosHandler('post', `question/run/${id}`, { language, code, className });
         if (response.success == true) {
             setTestCaseResult(response.result);
             toast.success('Output Came', {
@@ -146,7 +146,7 @@ const Problem = () => {
 
         const response = await axiosHandler('POST', 'compiler/execute', {
             language,
-            code: codepost,
+            code,
             input,
             className
         });
