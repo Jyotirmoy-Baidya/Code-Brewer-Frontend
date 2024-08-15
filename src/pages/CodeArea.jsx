@@ -100,7 +100,7 @@ const CodeArea = () => {
 
 
         setRunCodeLoading(true)
-        const response = await axiosHandler('post', 'compiler/execute', { language, code, input, className })
+        const response = await axiosHandler('post', 'compiler/execute', { language, code: codepost, input, className })
         if (response.success == true) {
             setOutput(response.output);
             setMetrics({
