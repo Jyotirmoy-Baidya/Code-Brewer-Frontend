@@ -27,7 +27,7 @@ const axiosHandler = async (method, url, data = {}, config = {}) => {
         });
         return response.data;
     } catch (error) {
-        console.log(error);
+        console.log("ss" + error);
         console.error('Axios Error:', error.response ? error.response.data : error.message);
         // You can return a custom error object or message here
         return {

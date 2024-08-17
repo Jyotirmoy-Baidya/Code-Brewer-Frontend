@@ -1,6 +1,5 @@
 import React from 'react';
 const Podium = ({ players }) => {
-    if (players.length < 3) return null; // Ensure there are at least 3 players
 
     return (
         <div className="flex text-black font-plex-mono justify-center items-end gap-8 mt-12">

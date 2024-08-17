@@ -18,6 +18,7 @@ import axiosInstance from '../utils/AxiosInstance';
 import ActiveContestHeader from '../components/basic/ActiveContestHeader';
 import axiosHandler from '../utils/AxiosInstance';
 import { AxiosHeaders } from 'axios';
+import Timer from '../components/Timer';
 
 
 
@@ -28,8 +29,23 @@ const options = [
     { value: 'python', label: 'Python' }
 ];
 
-const Problem = () => {
+const Problem = ({ endTime }) => {
 
+    const [contest, setContest] = useState({});
+
+    //Fetch the contest details
+    const fetchContestDetails = async () => {
+        setLoading(true);
+        const response = await axiosHandler('get', `contest/get/${params.code}`);
+        if (response.success == true) {
+            console.log('Contest details fetched successfully:', response.contest);
+            setContest(response.contest);
+        }
+        else {
+            console.error('Error fetching contest details:', response.message);
+        }
+        setLoading(false);
+    };
 
     const boilerplateCode = (lang) => {
         switch (lang) {
@@ -244,6 +260,7 @@ const Problem = () => {
 
     useEffect(() => {
         fetchQuestionDetails(params.problemid);
+        fetchContestDetails();
     }, [])
 
 
@@ -263,11 +280,12 @@ const Problem = () => {
                                 Sorry could not load the question
                             </div>
                         </div> :
-                        <div className="h-[84%] font-helvetica flex flex-col gap-4 text-white px-16 pt-4 pb-3">
+                        <div className="h-[84%] font-helvetica flex flex-col gap-4 text-white px-16 pt-4 pb-4">
                             <div className='h-[10%] flex gap-8 items-center col-span-2'>
                                 <div className='w-1/2 flex gap-4 items-center'>
                                     <NavLink to={`/contestactive/${params.code}`}><FaArrowCircleLeft className='text-2xl text-primary' /></NavLink>
                                     <div className={`text-4xl flex items-center gap-4`}>{problem.title} <span className={`p-2 rounded text-xs border ${problem.difficulty == 'Easy' ? 'border-primary' : problem.difficulty == 'Medium' ? 'border-blue-400' : 'border-red-400'}`}>{problem.difficulty}</span></div>
+                                    <Timer font={true} endTime={contest.endTime} />
                                 </div>
                                 <div className='w-1/2 flex items-center justify-between'>
                                     {/* <div className='border border-gray-200 py-1 px-8 rounded-md'>Select</div> */}

@@ -245,7 +245,7 @@ const CodeArea = () => {
         <>
             <NavigateToContest />
             <Header />
-            <div className="max-h-[84%] h-[84%] flex gap-4 text-white px-16 pt-3 pb-3">
+            <div className="h-[84%] flex gap-4 text-white px-16 pt-3 pb-3">
                 <div className='w-1/2 flex flex-col gap-4'>
                     <div className='w-full flex items-center justify-between'>
                         {/* <div className='border border-gray-200 py-1 px-8 rounded-md'>Select</div> */}
@@ -272,7 +272,7 @@ const CodeArea = () => {
                         className="text-lg h-[100%] max-h-[100%] bg-gray-800 overflow-scroll design-scrollbar"
                     />
                 </div>
-                <div className='w-1/2'>
+                <div className='w-1/2 overflow-scroll design-scrollbar'>
                     <div className='min-h-64 flex flex-col'>
                         <h2 className="text-lg mb-1 font-medium">Input</h2>
                         <textarea

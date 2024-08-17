@@ -10,7 +10,7 @@ const NavigateToContest = () => {
         const response = await axiosHandler('get', 'contest/getuser')
         if (response.success === true) {
             navigate(`/contestactive/${response.contestCode}`);
-            toast.success('You can continue.', {
+            toast.success('You have an ongoing contest', {
                 style: {
                     border: '1px solid #1BF1A1',
                     padding: '16px',
