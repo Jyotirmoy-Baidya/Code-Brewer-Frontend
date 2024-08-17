@@ -386,14 +386,14 @@ const Problem = () => {
                       Description
                     </div>
                     <div
-                      onClick={() => changeQuestionView("Discussion")}
+                      onClick={() => {changeQuestionView("Discussion");getComments()}}
                       className={`cursor-pointer px-4 py-2 text-gray-400  text-shadow flex-1 text-center transition-all duration-200 font-bold ${
                         questionView === "Discussion" ? "text-xl" : ""
                       }`}>
                       Discussion
                     </div>
                     <div
-                      onClick={() => changeQuestionView("Submission")}
+                      onClick={() => {changeQuestionView("Submission");getSubmissions()}}
                       className={`cursor-pointer px-4 py-2 text-gray-400 text-shadow flex-1 text-center transition-all duration-200 font-bold ${
                         questionView === "Submission" ? "text-xl" : ""
                       }`}>

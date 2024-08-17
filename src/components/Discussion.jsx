@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const Discussion = ({comments,addComment}) => {
     const [comment,setComment] = useState("");
   return (
-    <div className="max-w-4xl mx-auto p-4">
+    <div className="max-w-4xl mx-auto p-4 w-full">
       {/* Discussion Header */}
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold">Discussions ({comments.length} Threads)</h2>
