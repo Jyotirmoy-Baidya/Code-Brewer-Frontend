@@ -6,7 +6,7 @@ const Profile = () => {
     const navigate = useNavigate();
     const[solvedQuestions ,setSolvedQuestions]=useState([]);
     const[givencontests,setgivencontests]=useState([]);
-    const [user,setUser]=useState(null);
+    const [user,setUser]=useState();
     const fetchUserData = async() =>{
 
        const response=await axiosHandler('get', 'login/user/get-user');
@@ -29,9 +29,9 @@ const Profile = () => {
             <div className='h-96'>
             <span onClick={handleLogout} className=' border-2 cursor-pointer'>LogOut</span>
             <br />
-            <h2>{user.fullName}</h2>
-            <h2>{user.username}</h2>
-            <h2>{user.email}</h2>
+            <h2>{user?.fullName}</h2>
+            <h2>{user?.username}</h2>
+            <h2>{user?.email}</h2>
             </div>
             <div className='grid grid-cols-2 gap-4 w-full'>
                 <div className=''>

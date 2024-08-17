@@ -17,9 +17,9 @@ const Login = () => {
 
     const login = async () => {
         const response = await axiosHandler('post', 'login/user/login', { email, password });
-        console.log(response);
+        
         if (response.success === true) {
-            SuccessToast(`Welcome ${response.data.username}😊`);
+            SuccessToast(`Welcome ${response.data.validUser.username}😊`);
             navigate('/');
         }
         else {
