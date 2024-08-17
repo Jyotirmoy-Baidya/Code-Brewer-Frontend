@@ -40,7 +40,7 @@ const ProblemStatements = () => {
         <>
             <NavigateToContest />
             <Header />
-            <div className="max-h-[84%] flex flex-col gap-4 text-white px-16 pt-7 pb-3">
+            <div className="h-[84%] flex flex-col gap-4 text-white px-16 pt-7 pb-4">
                 <div className='flex gap-4 justify-center'>
                     <div className="flex gap-4 w-1/2">
                         <input type="text" className='grow px-4 py-2 rounded-md text-lg uppercase tracking-wider outline-none border border-white focus:border-primary bg-transparent text-primary' placeholder='Search Problems' onChange={(e) => setSearch(e.target.value)} value={search} />
@@ -51,7 +51,7 @@ const ProblemStatements = () => {
                     </div>
                 </div>
                 <hr />
-                <div className="p-2 grow grid grid-cols-2 gap-10 overflow-scroll hide-scrollbar contest-list">
+                <div className="p-2 grid grid-cols-2 gap-10 overflow-scroll design-scrollbar contest-list">
                     {
                         loading === true ?
                             <div className='flex text-xl gap-4 items-center'>
@@ -66,7 +66,7 @@ const ProblemStatements = () => {
                                 problemStatementList.map((problem, i) => {
                                     if (problem.title.toUpperCase().includes(search.toUpperCase()))
                                         return (
-                                            <NavLink to={`/problem/${problem._id}`} key={i} className=' border-l border-r border-primary h-24 rounded-lg flex items-center justify-between px-4 py-4 shadow shadow-primary active:shadow-none'>
+                                            <NavLink to={`/problem/${problem._id}`} key={i} className=' border-l border-r bg-primary-black border-primary h-24 rounded-lg flex items-center justify-between hover:shadow-md hover:shadow-primary px-4 py-4 shadow shadow-primary active:shadow-none'>
                                                 <div className=' flex flex-col gap-2'>
                                                     <div className='text-lg font-bold tracking-wider uppercase'>{problem.title}</div>
                                                     <div className={`text-xs ${problem.difficulty == 'Easy' ? 'text-primary' : problem.difficulty == 'Medium' ? 'text-blue-400' : 'text-red-400'} flex`}>{problem.difficulty}</div>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axiosInstance from '../../utils/AxiosInstance'
 import toast from 'react-hot-toast'
 import axiosHandler from '../../utils/AxiosInstance'
 

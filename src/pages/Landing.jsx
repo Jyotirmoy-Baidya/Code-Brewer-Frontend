@@ -13,7 +13,7 @@ const Landing = () => {
         <>
             <NavigateToContest />
             <Header />
-            <div className='h-[84%] grid grid-cols-2 text-white gap-4 px-16 pt-7 pb-16'>
+            <div className='h-[84%] grow grid grid-cols-2 text-white gap-4 px-16 pt-7 pb-16'>
                 <div className='flex flex-col gap-4 h-full'>
                     <div className='font-helvetica text-7xl'>
                         Build your <span className='text-primary'>&lt;</span>stuff<span className='text-primary'>&gt;</span> we can take care of the rest.

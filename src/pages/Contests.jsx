@@ -38,7 +38,7 @@ const Contests = () => {
         <>
             <NavigateToContest />
             <Header />
-            <div className="max-h-[84%] flex flex-col gap-4 text-white px-16 pt-7 pb-3">
+            <div className="h-[84%] flex flex-col gap-4 text-white px-16 pt-7 pb-4">
                 {/* <div className="text-3xl tracking-wider font-semibold font-helvetica">Contests</div> */}
                 <div className='flex gap-4 justify-center'>
                     <div className="flex gap-4 w-1/2">
@@ -50,7 +50,7 @@ const Contests = () => {
                     </div>
                 </div>
                 <hr />
-                <div className="p-2 grow grid grid-cols-2 gap-10 overflow-scroll hide-scrollbar contest-list">
+                <div className="p-2 grow grid grid-cols-2 gap-10 overflow-scroll design-scrollbar contest-list">
                     {
                         loading === true ? <div className='flex text-xl gap-4 items-center'>Fetching Contests<AiOutlineLoading3Quarters className='text-lg loading-spin' /></div> :
                             !contests.length > 0 ?

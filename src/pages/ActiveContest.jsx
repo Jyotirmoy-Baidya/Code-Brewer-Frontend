@@ -92,16 +92,16 @@ const ActiveContest = () => {
                     <div className='font-helvetica flex text-2xl text-white px-16 pt-4 pb-3'>
                         <div className='flex gap-4 items-center'>Loading <AiOutlineLoading3Quarters className='text-lg loading-spin' /></div>
                     </div> :
-                    <div className="font-helvetica flex gap-4 text-white px-16 pt-7 pb-3">
-                        <div className='w-1/2 flex flex-col h-[84%]'>
-                            <div className='flex justify-between'>
-                                <div className='text-4xl font-bold tracking-wider text-gray-300'>{contest.title}</div>
-                                <div className='flex gap-3 items-end'>
-                                    <Timer endTime={contest.endTime} />
-                                </div>
+                    <div className="h-[84%] font-helvetica flex flex-col gap-4 text-white px-16 pt-7 pb-3">
+                        <div className='flex justify-between'>
+                            <div className='text-4xl font-bold tracking-wider text-gray-300'>{contest.title}</div>
+                            <div className='flex gap-3 items-end'>
+                                <Timer endTime={contest.endTime} />
                             </div>
-                            <hr className='border-[0.2px]' />
-                            <div className='flex flex-col py-4 gap-5 overflow-scroll design-scrollbar'>
+                        </div>
+                        <hr className='border-[0.2px]' />
+                        <div className='flex h-[84%]'>
+                            <div className='w-1/2 flex flex-col py-4 gap-5 overflow-scroll design-scrollbar'>
                                 {
                                     contest?.questions?.filter(
                                         (problem) => solvedQuestionsId.includes(problem._id))
