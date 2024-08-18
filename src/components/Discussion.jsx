@@ -10,7 +10,7 @@ const Discussion = ({comments,addComment}) => {
       </div>
 
       {/* Input Section */}
-      <div className="border p-4 rounded-lg mb-6 bg-gray-800 text-white">
+      <div className=" p-4 rounded-lg mb-6 bg-gray-800 text-white">
         <div className="flex items-start space-x-4">
           <div className="w-10 h-10 bg-gray-700 rounded-full"></div>
           <div className="flex-1">
@@ -32,7 +32,7 @@ const Discussion = ({comments,addComment}) => {
       {/* Comment */}
       {
         comments.map((comment, index) => (
-            <div className="border p-4 rounded-lg bg-gray-800 text-white mb-6" key={index}>
+            <div className=" p-4 rounded-lg bg-gray-800 text-white mb-6" key={index}>
             <div className="flex items-start space-x-4">
               <div className="w-10 h-10 bg-gray-700 rounded-full"></div>
               <div className="flex-1">
