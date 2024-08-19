@@ -55,7 +55,7 @@ const Contests = () => {
                         loading === true ? <div className='flex text-xl gap-4 items-center'>Fetching Contests<AiOutlineLoading3Quarters className='text-lg loading-spin' /></div> :
                             !contests.length > 0 ?
                                 <div className='flex text-xl gap-4 items-center'>
-                                    Due to server issue unable fetch the contests.
+                                    Due to server issue unable to fetch the contests.
                                 </div> :
                                 <>{
                                     contests.map((ele, i) => {

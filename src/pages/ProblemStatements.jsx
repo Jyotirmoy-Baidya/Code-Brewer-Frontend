@@ -60,7 +60,7 @@ const ProblemStatements = () => {
                             :
                             !problemStatementList.length > 0 ?
                                 <div className='flex text-xl gap-4 items-center'>
-                                    Due to server issue unable fetch the problem statements.
+                                    Due to server issue unable to fetch the problem statements.
                                 </div> :
 
                                 problemStatementList.map((problem, i) => {
