@@ -40,11 +40,10 @@ const Header = () => {
             </div>
             <div className='flex justify-end w-[20%]'>
                 {
-                    loading ? <></> :
-                        login ?
-                            <NavLink to="/profile" className='flex justify-center items-center rounded-full h-10 w-10 uppercase border-primary border-4'>
-                                {user.username[0]}</NavLink> :
-                            <button onClick={() => navigate("/login")} className='min-h-12 bg-primary text-black rounded-md px-8 font-plex-mono'>Login</button>
+                    login ?
+                        <NavLink to="/profile" className='flex justify-center items-center rounded-full h-10 w-10 uppercase border-primary border-4'>
+                            {user.username[0]}</NavLink> :
+                        <button onClick={() => navigate("/login")} className='min-h-12 bg-primary text-black rounded-md px-8 font-plex-mono'>Login</button>
                 }
             </div>
         </div>

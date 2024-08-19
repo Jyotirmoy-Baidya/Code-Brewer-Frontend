@@ -52,7 +52,7 @@ const App = () => {
           {/* Room Video Call  */}
           <Route path="/room/host/:roomid" element={
             <AgoraRTCProvider client={agoraClient}>
-              <RoomHostMessaging />
+              <RoomHost />
             </AgoraRTCProvider>
           } />
           <Route path="/room/participant/:roomid" element={<>Participant</>} />

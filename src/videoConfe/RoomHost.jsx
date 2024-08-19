@@ -13,7 +13,7 @@ import AgoraRTC, {
 } from "agora-rtc-react";
 
 const RoomHost = () => {
-    const appId = '51fbe9a59fa942378240eb92130b05f5';
+    const appId = '15b767a0b7dd4fe488826585f7eeb187';
     const { roomid } = useParams();
 
     const generateUserId = () => {
@@ -25,15 +25,15 @@ const RoomHost = () => {
     const userId = generateUserId();
 
     const [activeConnection, setActiveConnection] = useState(true);
-    const [micOn, setMic] = useState(true);
-    const [cameraOn, setCamera] = useState(true);
+    const [micOn, setMic] = useState(false);
+    const [cameraOn, setCamera] = useState(false);
     const [screenSharing, setScreenSharing] = useState(false);
     const [screenTrack, setScreenTrack] = useState(null);
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     // Join the channel
-    const client = useJoin(
+    const client1 = useJoin(
         {
             appid: appId,
             channel: roomid,
@@ -43,7 +43,7 @@ const RoomHost = () => {
         activeConnection,
     );
 
-    console.log(client);
+    console.log(client1);
 
     // Get local tracks
     const { localMicrophoneTrack } = useLocalMicrophoneTrack(micOn);
@@ -84,6 +84,7 @@ const RoomHost = () => {
 
     return (
         <>
+
             <div id='remoteVideoGrid'>
                 {
                     remoteUsers.map((user) => (
@@ -130,7 +131,7 @@ const RoomHost = () => {
                         <button id="endConnection"
                             onClick={() => {
                                 setActiveConnection(false);
-                                navigate('/');
+                                // navigate('/');
                             }}> Disconnect
                         </button>
                     </div>
