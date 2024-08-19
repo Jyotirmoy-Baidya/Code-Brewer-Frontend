@@ -16,8 +16,8 @@ import { FaClock, FaMemory } from "react-icons/fa";
 import Discussion from "../components/Discussion";
 
 const options = [
-  { value: "c", label: "C" },
-  { value: "cpp", label: "C++" },
+  // { value: "c", label: "C" },
+  // { value: "cpp", label: "C++" },
   { value: "java", label: "Java" },
   { value: "python", label: "Python" },
 ];
@@ -25,14 +25,14 @@ const options = [
 const Problem = () => {
   const boilerplateCode = (lang) => {
     switch (lang) {
-      case "java":
-        return `class TempCode {
-  
+      case 'java':
+                return `class TempCode {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
 }`;
-      case "cpp":
-        return `class TempCode {
-  
-}`;
+case 'python':
+  return `print("hello world")`;
       default:
         return "";
     }
@@ -199,16 +199,16 @@ const Problem = () => {
 
   const getLanguageExtension = (lang) => {
     switch (lang) {
-      case "c":
-        return cpp();
-      case "cpp":
-        return cpp();
+      // case "c":
+      //   return cpp();
+      // case "cpp":
+      //   return cpp();
       case "java":
         return java();
       case "python":
         return python();
       default:
-        return cpp(); // Default to C++ if no match
+        return java(); // Default to java if no match
     }
   };
 
@@ -337,7 +337,7 @@ const Problem = () => {
                 <CustomDropdown
                   options={options}
                   value={language}
-                  onChange={setLanguage}
+                  onChange={(e)=>{setLanguage(e);setCode(boilerplateCode(e))}}
                 />
               </div>
               <div

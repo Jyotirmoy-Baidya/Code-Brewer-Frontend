@@ -21,8 +21,8 @@ import axiosHandler from '../utils/AxiosInstance';
 
 
 const options = [
-    { value: 'c', label: 'C' },
-    { value: 'cpp', label: 'C++' },
+    // { value: 'c', label: 'C' },
+    // { value: 'cpp', label: 'C++' },
     { value: 'java', label: 'Java' },
     { value: 'python', label: 'Python' }
 ];
@@ -34,12 +34,12 @@ const CodeArea = () => {
         switch (lang) {
             case 'java':
                 return `class TempCode {
-  
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
 }`;
-            case 'cpp':
-                return `class TempCode {
- 
-}`;
+            case 'python':
+                return `print("hello world")`;
             default:
                 return '';
         }
@@ -170,16 +170,16 @@ const CodeArea = () => {
 
     const getLanguageExtension = (lang) => {
         switch (lang) {
-            case 'c':
-                return cpp();
-            case 'cpp':
-                return cpp();
+            // case 'c':
+            //     return cpp();
+            // case 'cpp':
+            //     return cpp();
             case 'java':
                 return java();
             case 'python':
                 return python();
             default:
-                return cpp(); // Default to C++ if no match
+                return java(); // Default to C++ if no match
         }
     };
 
@@ -263,7 +263,8 @@ const CodeArea = () => {
                             <CustomDropdown
                                 options={options}
                                 value={language}
-                                onChange={setLanguage}
+                                onChange={(e)=>{setLanguage(e);setCode(boilerplateCode(e))}}
+                                // onChange={setLanguage}
                             />
                         </div>
                         <div className='bg-blue-600 h-10 w-24 flex justify-center items-center rounded-md active:bg-blue-800 cursor-pointer' onClick={() => runCode()}>{runCodeLoading ? <AiOutlineLoading3Quarters className='text-lg loading-spin' /> : "Run Code"}</div>
