@@ -160,53 +160,6 @@ const CodeArea = () => {
         return jsCompatibleString;
     }
     
-    // function convertJavaToJSString(javaCode) {
-    //     // Step 1: Replace newlines with a placeholder to preserve indentation
-    //     const placeholder = '__NEWLINE__';
-    //     const codeWithPlaceholders = javaCode
-    //         .replace(/\n/g, placeholder) // Replace newlines with placeholder
-    //         .replace(/\r/g, ''); // Remove carriage returns if present
-    
-    //     // Step 2: Remove excessive whitespace
-    //     const singleLineCode = codeWithPlaceholders.replace(/\s+/g, ' ').trim();
-    
-    //     // Step 3: Escape double quotes and backslashes
-    //     const jsCompatibleString = singleLineCode
-    //         .replace(/\\/g, '\\\\')  // Escape backslashes
-    //         .replace(/"/g, '\\"')    // Escape double quotes
-    //         .replace(new RegExp(placeholder, 'g'), '\\n'); // Replace placeholder with newline
-    
-    //     console.log(jsCompatibleString);
-    //     return jsCompatibleString;
-    // }
-
-    // function convertJavaToJSString(javaCode) {
-    //     // Step 1: Preserve indentation by converting newlines to a placeholder and keeping indentation
-    //     const placeholder = '__NEWLINE__';
-    //     const codeWithPlaceholders = javaCode
-    //         .replace(/\r/g, '') // Remove carriage returns if present
-    //         .replace(/(\r?\n)+/g, (match, offset, string) => {
-    //             // Replace newlines with a placeholder, preserving indentation
-    //             const leadingSpaces = string.substring(0, offset).match(/(\s*)$/)[0];
-    //             return `${placeholder}${leadingSpaces}`;
-    //         });
-    
-    //     // Step 2: Convert to single line, ensuring that indentation is preserved as spaces
-    //     const singleLineCode = codeWithPlaceholders
-    //         .replace(/\s+/g, ' ') // Replace multiple spaces with a single space
-    //         .trim(); // Remove leading/trailing spaces
-    
-    //     // Step 3: Escape backslashes and double quotes
-    //     const jsCompatibleString = singleLineCode
-    //         .replace(/\\/g, '\\\\') // Escape backslashes
-    //         .replace(/"/g, '\\"');  // Escape double quotes
-    
-    //     console.log(jsCompatibleString);
-    //     // Step 4: Replace placeholder with actual newlines in the final string
-    //     return jsCompatibleString
-    //         .replace(new RegExp(placeholder, 'g'), '\\n'); // Replace placeholder with escaped newline
-    // }
-    
 
     const handleLanguageChange = (event) => {
         const selectedLanguage = event.target.value;
