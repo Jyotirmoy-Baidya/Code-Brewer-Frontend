@@ -247,7 +247,7 @@ const Problem = () => {
   const getSubmissions = async () => {
     const response = await axiosHandler(
       "get",
-      `http://localhost:3010/api/v1/question/getsubmissions/${params.problemid}`
+      `question/getsubmissions/${params.problemid}`
     );
     console.log(response);
     if (response.success == true) {
@@ -263,7 +263,7 @@ const Problem = () => {
   const getComments = async () => {
     const response = await axiosHandler(
       "get",
-      `http://localhost:3010/api/v1/question/getdiscussions/${params.problemid}`
+      `question/getdiscussions/${params.problemid}`
     );
     console.log(response);
     if (response.success == true) {
@@ -317,10 +317,10 @@ const Problem = () => {
                 {problem.title}{" "}
                 <span
                   className={`p-2 rounded text-xs border ${problem.difficulty == "Easy"
-                      ? "border-primary"
-                      : problem.difficulty == "Medium"
-                        ? "border-blue-400"
-                        : "border-red-400"
+                    ? "border-primary"
+                    : problem.difficulty == "Medium"
+                      ? "border-blue-400"
+                      : "border-red-400"
                     }`}>
                   {problem.difficulty}
                 </span>
