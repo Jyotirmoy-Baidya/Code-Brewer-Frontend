@@ -26,13 +26,13 @@ const Problem = () => {
   const boilerplateCode = (lang) => {
     switch (lang) {
       case 'java':
-                return `class TempCode {
+        return `class TempCode {
     public static void main(String[] args) {
         System.out.println("Hello, World!");
     }
 }`;
-case 'python':
-  return `print("hello world")`;
+      case 'python':
+        return `print("hello world")`;
       default:
         return "";
     }
@@ -221,7 +221,7 @@ case 'python':
 
     const response = await axiosHandler(
       "get",
-      `http://localhost:3010/api/v1/question/${id}`
+      `question/${id}`
     );
     if (response.success == true) {
       setProblem(response.question);
@@ -316,13 +316,12 @@ case 'python':
               <div className={`text-4xl flex items-center gap-4`}>
                 {problem.title}{" "}
                 <span
-                  className={`p-2 rounded text-xs border ${
-                    problem.difficulty == "Easy"
+                  className={`p-2 rounded text-xs border ${problem.difficulty == "Easy"
                       ? "border-primary"
                       : problem.difficulty == "Medium"
-                      ? "border-blue-400"
-                      : "border-red-400"
-                  }`}>
+                        ? "border-blue-400"
+                        : "border-red-400"
+                    }`}>
                   {problem.difficulty}
                 </span>
               </div>
@@ -337,7 +336,7 @@ case 'python':
                 <CustomDropdown
                   options={options}
                   value={language}
-                  onChange={(e)=>{setLanguage(e);setCode(boilerplateCode(e))}}
+                  onChange={(e) => { setLanguage(e); setCode(boilerplateCode(e)) }}
                 />
               </div>
               <div
@@ -366,37 +365,34 @@ case 'python':
                         questionView === "Description"
                           ? "33.33%"
                           : questionView === "Discussion"
-                          ? "33.33%"
-                          : "33.33%",
+                            ? "33.33%"
+                            : "33.33%",
                       left:
                         questionView === "Description"
                           ? "0%"
                           : questionView === "Discussion"
-                          ? "33.33%"
-                          : "66.66%",
+                            ? "33.33%"
+                            : "66.66%",
                     }}></div>
 
                   {/* Tabs */}
                   <div className="flex justify-between">
                     <div
                       onClick={() => changeQuestionView("Description")}
-                      className={`cursor-pointer px-4 py-2 text-gray-400 text-shadow flex-1 text-center transition-all duration-200 font-bold ${
-                        questionView === "Description" ? "text-xl" : ""
-                      }`}>
+                      className={`cursor-pointer px-4 py-2 text-gray-400 text-shadow flex-1 text-center transition-all duration-200 font-bold ${questionView === "Description" ? "text-xl" : ""
+                        }`}>
                       Description
                     </div>
                     <div
-                      onClick={() => {changeQuestionView("Discussion");getComments()}}
-                      className={`cursor-pointer px-4 py-2 text-gray-400  text-shadow flex-1 text-center transition-all duration-200 font-bold ${
-                        questionView === "Discussion" ? "text-xl" : ""
-                      }`}>
+                      onClick={() => { changeQuestionView("Discussion"); getComments() }}
+                      className={`cursor-pointer px-4 py-2 text-gray-400  text-shadow flex-1 text-center transition-all duration-200 font-bold ${questionView === "Discussion" ? "text-xl" : ""
+                        }`}>
                       Discussion
                     </div>
                     <div
-                      onClick={() => {changeQuestionView("Submission");getSubmissions()}}
-                      className={`cursor-pointer px-4 py-2 text-gray-400 text-shadow flex-1 text-center transition-all duration-200 font-bold ${
-                        questionView === "Submission" ? "text-xl" : ""
-                      }`}>
+                      onClick={() => { changeQuestionView("Submission"); getSubmissions() }}
+                      className={`cursor-pointer px-4 py-2 text-gray-400 text-shadow flex-1 text-center transition-all duration-200 font-bold ${questionView === "Submission" ? "text-xl" : ""
+                        }`}>
                       Submission
                     </div>
                   </div>
