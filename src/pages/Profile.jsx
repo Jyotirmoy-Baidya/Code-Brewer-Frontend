@@ -38,8 +38,8 @@ const Profile = () => {
       if (performence.success) {
         setPerformanceData(performence.result);
       }
-      
-      
+
+
     } catch (error) {
       console.error("Error fetching user data:", error);
     } finally {
@@ -87,7 +87,7 @@ const Profile = () => {
   return (
     <>
       <Header />
-      <div className="bg-black min-h-screen p-8 text-white">
+      <div className="bg-black h-[84%] p-8 text-white overflow-scroll design-scrollbar" >
         {/* User Profile Section */}
         <div className="bg-primary-black p-6 rounded-lg shadow-lg flex justify-between items-center mb-8 ">
           <div className="flex items-center">
@@ -174,13 +174,12 @@ const Profile = () => {
                       {ques.title}
                     </h4>
                     <p
-                      className={`${
-                        ques.difficulty === "Easy"
+                      className={`${ques.difficulty === "Easy"
                           ? "text-green-400"
                           : ques.difficulty === "Medium"
-                          ? "text-yellow-400"
-                          : "text-red-400"
-                      }`}>
+                            ? "text-yellow-400"
+                            : "text-red-400"
+                        }`}>
                       {ques.difficulty}
                     </p>
                   </div>
@@ -201,7 +200,7 @@ const Profile = () => {
                 givenContests.map((contest, index) => (
                   <div
                     key={index}
-                    className={`${contest?.user?.isPlagiarism?"bg-red-900":""} flex justify-between items-center bg-gray-900 text-gray-400 p-2 px-4 rounded-lg mb-2 shadow-sm shadow-slate-950`}>
+                    className={`${contest?.user?.isPlagiarism ? "bg-red-900" : ""} flex justify-between items-center bg-gray-900 text-gray-400 p-2 px-4 rounded-lg mb-2 shadow-sm shadow-slate-950`}>
                     <h4 className="text-md font-semibold ">
                       {contest?.contest?.title}
                     </h4>

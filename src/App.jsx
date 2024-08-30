@@ -8,18 +8,15 @@ import ContestProblem from "./pages/ContestProblem"
 import CreateProblem from "./pages/CreateProblem"
 import { Toaster } from "react-hot-toast"
 import CodeArea from "./pages/CodeArea"
-import Broiler from "./components/basic/Broiler"
-import { useEffect, useState } from "react"
-import EnterUsernamePopUp from "./components/EnterUsernamePopUp"
-import Podium from "./components/podium/Podium"
 import CreateContest from "./pages/CreateContest"
 import About from "./pages/About"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
-import RoomHost from "./videoConfe/RoomHost"
 import AgoraRTC, { AgoraRTCProvider, useRTCClient } from "agora-rtc-react"
-import RoomHostMessaging from "./videoConfe/RoomHostWithMessaging"
 import Profile from "./pages/Profile"
+import LiveLobby from "./pages/LiveLobby"
+import HostRoomProvider from "./pages/HostRoomProvider"
+import ParticipantRoomProvider from "./pages/ParticipantRoomProvider"
 
 const App = () => {
   //   try {
@@ -50,13 +47,13 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
 
           {/* Room Video Call  */}
-          <Route path="/room/host/:roomid" element={
+          <Route path='/live' element={<LiveLobby />} />
+          <Route path="/host/:roomid" element={
             <AgoraRTCProvider client={agoraClient}>
-              <RoomHost />
+              <HostRoomProvider />
             </AgoraRTCProvider>
           } />
-          <Route path="/room/participant/:roomid" element={<>Participant</>} />
-
+          <Route path="participant/:roomid" element={<ParticipantRoomProvider />} />
           <Route path="*" element={<Landing />} />
         </Routes>
       </BrowserRouter>

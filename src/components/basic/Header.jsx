@@ -36,6 +36,7 @@ const Header = () => {
                 <NavLink to="/codearea" className={`${location.pathname === '/codearea' && "text-primary"}`}>Code Area</NavLink>
                 <NavLink to="/problemstatements" className={`${location.pathname === '/problemstatements' && "text-primary"}`}>Problem statements</NavLink>
                 <NavLink to="/contests" className={`${location.pathname === '/contests' && "text-primary"}`}>Battleground</NavLink>
+                <a href="https://codecrafters-live.netlify.app/" target="_blank">Live</a>
                 <NavLink to="/aboutus" className={`${location.pathname === '/aboutus' && "text-primary"}`}>About us</NavLink>
             </div>
             <div className='flex justify-end w-[20%]'>
