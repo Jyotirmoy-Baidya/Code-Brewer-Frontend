@@ -1,10 +1,12 @@
 import axios from 'axios';
 
 const renderUrl = 'https://tally-backedcode-1.onrender.com'
+const renderUrl2 = 'https://codebrewers-backend-1.onrender.com'
+
 const localUrl = 'http://localhost:3010'
 
 const axiosInstance = axios.create({
-    baseURL: `${renderUrl}/api/v1/`,
+    baseURL: `${renderUrl2}/api/v1/`,
     timeout: 10000, // Timeout after 10 seconds
     withCredentials: true, // Include cookies in requests by default
     headers: {

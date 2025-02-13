@@ -35,7 +35,6 @@ const ProblemStatements = () => {
         fetchAllQuestions();
     }, [])
 
-
     return (
         <>
             <NavigateToContest />
